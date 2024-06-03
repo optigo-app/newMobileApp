@@ -2,6 +2,7 @@ import React from 'react';
 import './Styles.css';
 
 const ErrorPage = () => {
+  console.log('error page');
   return (
     <div className='main404PageDiv'>
     <div id="error-page">
