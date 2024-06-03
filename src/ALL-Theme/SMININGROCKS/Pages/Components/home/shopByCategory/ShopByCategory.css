@@ -52,3 +52,52 @@
         padding: 20px!important;
     }
 }
+
+
+
+
+
+.shopbycategoryTitle{
+    font-family: 'PT Sans', sans-serif;
+    font-size: 15px;
+    color: rgb(125, 127, 133);
+    margin: 7px 0px 0px 7px;
+}
+
+.shopbycategoryDesc{
+    display: flex;
+    justify-content: center;
+}
+
+.shopByCategoryBox{
+    margin: 30px;  
+}
+.shopByCategoryBoxImg{
+    height: 200px;
+    width: 200px;
+}
+
+.shopByCategoryBox1Main{
+    display: flex;
+}
+
+.shopByCategoryBox2Main{
+    display: flex;
+}
+
+@media screen and (max-width: 550px) {
+
+
+    .shopByCategoryBox{
+        width: 50%!important;
+        margin: 2px!important;
+        height: 200px;
+    }
+
+    .shopByCategoryBoxImg{
+        height: 100%!important;
+        width: 100%!important;
+        object-fit: cover;
+    }
+
+}

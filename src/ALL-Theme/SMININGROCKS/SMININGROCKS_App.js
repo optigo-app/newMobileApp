@@ -54,6 +54,8 @@ import PageNotFound from "./Pages/Components/404Page/PageNotFound"
 import CartPageSkelton from './Pages/Components/home/Header/cartPage/CartPageSkelton'
 import ProductFilterSkelton from './Pages/Components/productPage/ProductFilterSkelton'
 import HomeTab from './Pages/Components/HomeTab'
+import AccountWothoutLogin from './Pages/Components/account/AccountWothoutLogin'
+import WithoutLoginCart from './Pages/Components/home/Header/cartPage/WithoutLoginCart'
 
 export default function SMININGROCKS_App() {
     const isLoginStatus = useRecoilValue(loginState);
@@ -84,6 +86,8 @@ export default function SMININGROCKS_App() {
                     location.pathname === "/accountledgerexcel" ||
                     location.pathname === "/accountledgerdebit" ||
                     location.pathname === "/accountledgercredit" ||
+                    location.pathname === "/AccountWothoutLogin" ||
+                    location.pathname === "/WithoutLoginCart" ||
                     location.pathname === "/CurrentVersion") ?
                     null : <Header />}
                 <div>
@@ -125,6 +129,8 @@ export default function SMININGROCKS_App() {
                         <Route path="/customize" element={<Customize />} />
                         <Route path="/history" element={<History />} />
                         <Route path="/term&condition" element={<TermsAndConditions />} />
+                        <Route path="/AccountWothoutLogin" element={<AccountWothoutLogin />} />
+                        <Route path="/WithoutLoginCart" element={<WithoutLoginCart />} />
                         <Route path='/' element={<PrivateRoutes isLoginStatus={isLoginStatus} />}>
                             <Route path="/myWishList" element={<MyWishList />} />
                             <Route path="/productpage/*" element={<ProductList />} />
