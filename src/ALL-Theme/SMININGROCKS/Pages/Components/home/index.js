@@ -331,14 +331,16 @@ export default function Home() {
           <title>{title}</title>
           <link rel="icon" type="image/png" href={favicon} sizes="16x16" />
         </Helmet>
-        {islogin == 'true' ? (
+        {/* {islogin == 'true' ? (
           <>
             <Video />
             <Footer />
           </>
-        ) :
-          <>
+        ) : */}
+          {/* <> */}
             <Video />
+            <ShopByCategory />
+
             {/* <SmilingRock /> */}
             <PromoComponent1 />
             <BrandsComponent />
@@ -350,7 +352,6 @@ export default function Home() {
             <AffiliationData />
             <SocialMedia />
             {/* <DaimondEveyone /> */}
-            {/* <ShopByCategory /> */}
             {/* <SmilingBrides /> */}
             {/* <FeaturedCollection /> */}
             <div style={{ marginTop: '60px' }}>
@@ -358,9 +359,9 @@ export default function Home() {
             </div>
             {/* <ShopifySection /> */}
             {/* <ShopOurInstagram /> */}
-            <Footer />
-          </>
-        }
+            {/* <Footer /> */}
+          {/* </>
+        } */}
       </div>
     </div>
   )
