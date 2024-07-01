@@ -1,7 +1,5 @@
 .smilingPaymentMain {
-    margin-inline: 13%;
     background-color: white;
-    padding-top: 30px;
 }
 
 .smilingPayentImg {
@@ -36,12 +34,12 @@
 
 .paymentBtn {
     height: 40px;
-    width: 180px;
-    background-color: #e1e1e1;
-    border: 1px solid lightgray;
+    width: 100%;
+    background-color: #ffd814;
     font-weight: 500;
+    border: none;
+    outline: none;
     border-radius: 5px;
-    margin-bottom: 60px;
 }
 
 .AddressTitle {
@@ -60,6 +58,14 @@
     margin-top: 30px;
 }
 
+.changeAddressBtnPayment{
+    height: 30px;
+    width: 110px;
+    font-weight: 500;
+    border-radius: 5px;
+    border: none;
+    background-color: #d3d3d38f;
+}
 
 
 .filterDivcontainerPaymetPage {
@@ -76,16 +82,15 @@
     font-size: 14px;
 }
 
-@media screen and (max-width: 1600px) {
-    .smilingPaymentMain {
-        margin-inline: 1% !important;
-    }
+.smilingPaymentBtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
 }
-@media screen and (max-width: 1450px) {
-    .smilingPaymentMain{
-        padding-top: 10px!important;
-    }
-}
+
 
 @media screen and (min-width:1001px) {
     .smilingPaymentMainMobile {
@@ -120,13 +125,13 @@
     }
 }
 
+.smilingPaySub1Box1{
+    margin-left: 15px;
+}
+
 @media screen and (max-width: 600px) {
     .paymentSubDiv {
         padding: 20px 0px 0px !important;
-    }
-
-    .paymentBtn {
-        margin-bottom: 10px;
     }
 
     .mainTitleMobileShiping {
@@ -171,7 +176,7 @@
     }
 
     .smilingPaySub1Box1{
-        width: 100%!important;
+        width: 95%!important;
     }
 
     .smilingPaySub1Box2{

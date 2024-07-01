@@ -36,6 +36,7 @@ import { SearchProductDataAPI } from "../../../../Utils/API/SearchProductDataAPI
 import { SearchPriceDataAPI } from "../../../../Utils/API/SearchPriceDataAPI";
 import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { FiArrowLeft } from "react-icons/fi";
 
 export default function Header() {
   // const [titleImg, setTitleImg ] = useState() 
@@ -800,73 +801,121 @@ export default function Header() {
 
   return (
     <>
-    
-      <div
-        style={{
-          top: 0,
-          width: "100%",
-          zIndex: "100",
-        }}
-        className="mobileHeaderSmining"
-      >
-        {
-          serachsShowOverlay ?
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }} onClick={() => navigation('/SearchPage')}>
-              <div className="searchBoxOnlyHeaderFiexedMain">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  className="searchBoxOnlyHeaderFiexed"
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter') {
-                      searchDataFucn();
-                      setSerachShowOverlay(false);
-                    }
-                  }}
-                />
-                <SearchIcon onClick={searchDataFucn} />
-              </div>
-              <IoClose
-                style={{
-                  height: "30px",
-                  width: "30px",
-                  color: "white",
-                  cursor: "pointer",
+
+      {(location.pathname == '/productpage' || location.pathname == '/productdetail') && !serachsShowOverlay ?
+        <div style={{ display: 'flex', justifyContent: 'space-between', paddingInline: '10px', height: '50px', position: 'fixed', width: '100%', alignItems: 'center', padding: '0px 0px 0px 5px', borderBottom: '1px solid lightgray', backgroundColor: 'white', zIndex: '111111' }}>
+          <FiArrowLeft style={{ height: '25px', width: '25px' }} onClick={() => location.pathname == '/productdetail' ? navigation('/productpage') : navigation('/')} />
+          <ul className="mobileViewTopIconeMain" style={{ listStyle: 'none', margin: '0px', display: 'flex', padding: '0px', width: '90%' }}>
+            <div className="searchBoxOnlyProductPageMain">
+
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                className="searchBoxOnlyProductPage"
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    searchDataFucn();
+                  }
                 }}
-                onClick={toggleOverlay}
               />
+              <SearchIcon onClick={searchDataFucn} />
             </div>
-            :
-            <div className="smilingMobileSubDiv">
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  height: '100%'
-                }}>
-                <div
-                  className="mobileViewFirstDiv2"
+            <Badge
+              badgeContent={getCartListCount}
+              overlap={"rectangular"}
+              color="secondary"
+              style={{ marginTop: '5px', marginLeft: '5px' }}
+              className="mobileCartIconePage"
+            >
+              <Tooltip title="Cart">
+                <li
+                  onClick={() => navigation('/CartPage')}
+                  // onClick={toggleCartDrawer(true)}CartPage
+                  style={{
+                    marginTop: "0px",
+                    cursor: "pointer",
+                  }}
                 >
-                  <a href="/" style={{ marginTop: '5px' }}>
-                    <img src={titleImg} className="MainlogogMobileImage" />
-                  </a>
+                  <ShoppingCartOutlinedIcon
+                    sx={{ height: '25x', width: '25px' }}
+                  />
+                </li>
+              </Tooltip>
+            </Badge>
+            {/* <li onClick={toggleOverlay}>
+                <SearchIcon />
+              </li> */}
+          </ul>
+        </div>
+        :
+        <div
+          style={{
+            top: 0,
+            width: "100%",
+            zIndex: "100",
+          }}
+          className="mobileHeaderSmining"
+        >
+          {
+            serachsShowOverlay ?
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }} onClick={() => navigation('/SearchPage')}>
+                <div className="searchBoxOnlyHeaderFiexedMain">
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    className="searchBoxOnlyHeaderFiexed"
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') {
+                        searchDataFucn();
+                        setSerachShowOverlay(false);
+                      }
+                    }}
+                  />
+                  <SearchIcon onClick={searchDataFucn} />
                 </div>
+                <IoClose
+                  style={{
+                    height: "30px",
+                    width: "30px",
+                    color: "white",
+                    cursor: "pointer",
+                  }}
+                  onClick={toggleOverlay}
+                />
+              </div>
+              :
+              <div className="smilingMobileSubDiv">
                 <div
                   style={{
                     display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-end",
-                  }}
+                    justifyContent: "space-between",
+                    height: '100%'
+                  }}>
+                  <div
+                    className="mobileViewFirstDiv2"
+                  >
+                    <a href="/" style={{ marginTop: '5px' }}>
+                      <img src={titleImg} className="MainlogogMobileImage" />
+                    </a>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-end",
+                    }}
 
-                  className="mobileViewFirstDiv3"
-                >
+                    className="mobileViewFirstDiv3"
+                  >
 
-                  {islogin === "true" &&
-                    <div className="mobileHeaderFixedMobileLastDiv" style={{ display: 'flex' }}>
+                    {islogin === "true" &&
+                      <div className="mobileHeaderFixedMobileLastDiv" style={{ display: 'flex' }}>
 
-                      {/* <li style={{ listStyle: 'none', width: '40px', textAlign: 'center', marginInline: '10px', marginTop: '-4px' }}>
+                        {/* <li style={{ listStyle: 'none', width: '40px', textAlign: 'center', marginInline: '10px', marginTop: '-4px' }}>
                         <Badge
                           badgeContent={getCartListCount}
                           overlap={"rectangular"}
@@ -892,36 +941,65 @@ export default function Header() {
                           </Tooltip>
                         </Badge>
                       </li> */}
-                      <Badge
-                        badgeContent={getWishListCount}
-                        overlap={"rectangular"}
-                        color="secondary"
-                        style={{ marginInline: '6px' }}
-                        className="smilingHeaderWhishlistIcon"
-                      // className="smilingHeaderWhishlistIcon badge12"
-                      >
-                        <Tooltip title="WishList">
-                          <li style={{ listStyle: 'none' }} onClick={() => navigation("/myWishList")}>
-                            <FavoriteBorderIcon
-                              style={{
-                                height: "25px",
-                                cursor: "pointer",
-                                width: "25px",
-                                // color: "white",
-                              }}
-                              className="mobileViewSmilingTop1Icone"
-                            />
-                          </li>
-                        </Tooltip>
-                      </Badge>
+                        <Badge
+                          badgeContent={getWishListCount}
+                          overlap={"rectangular"}
+                          color="secondary"
+                          style={{ marginInline: '6px' }}
+                          className="smilingHeaderWhishlistIcon"
+                        // className="smilingHeaderWhishlistIcon badge12"
+                        >
+                          <Tooltip title="WishList">
+                            <li style={{ listStyle: 'none' }} onClick={() => navigation("/myWishList")}>
+                              <FavoriteBorderIcon
+                                style={{
+                                  height: "25px",
+                                  cursor: "pointer",
+                                  width: "25px",
+                                  // color: "white",
+                                }}
+                                className="mobileViewSmilingTop1Icone"
+                              />
+                            </li>
+                          </Tooltip>
+                        </Badge>
 
 
-                    </div>
-                  }
+                      </div>
+                    }
+                  </div>
+                </div>
+                <div>
+                  <div className="searchBoxOnlyHeaderFiexedMainTopFixed" onClick={() => navigation('/SearchPage')}>
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      value={searchText}
+                      onChange={(e) => setSearchText(e.target.value)}
+                      className="searchBoxOnlyHeaderFiexed"
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter') {
+                          searchDataFucn();
+                          setSerachShowOverlay(false);
+                        }
+                      }}
+                      style={{ width: '100%' }}
+                    />
+                    <SearchIcon onClick={searchDataFucn} />
+                  </div>
+
                 </div>
               </div>
-              <div>
-                <div className="searchBoxOnlyHeaderFiexedMainTopFixed" onClick={() => navigation('/SearchPage')}>
+          }
+
+          {!drawerShowOverlay && (
+            <div
+              div
+              className={`Smining-Top-Header-fixed-main ${isHeaderFixed ? "fixed" : ""
+                }`}
+            >
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }} onClick={() => navigation('/SearchPage')}>
+                <div className="searchBoxOnlyHeaderFiexedMain">
                   <input
                     type="text"
                     placeholder="Search..."
@@ -934,43 +1012,14 @@ export default function Header() {
                         setSerachShowOverlay(false);
                       }
                     }}
-                    style={{ width: '100%' }}
                   />
                   <SearchIcon onClick={searchDataFucn} />
                 </div>
-
               </div>
             </div>
-        }
-
-        {!drawerShowOverlay && (
-          <div
-            div
-            className={`Smining-Top-Header-fixed-main ${isHeaderFixed ? "fixed" : ""
-              }`}
-          >
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }} onClick={() => navigation('/SearchPage')}>
-              <div className="searchBoxOnlyHeaderFiexedMain">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  className="searchBoxOnlyHeaderFiexed"
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter') {
-                      searchDataFucn();
-                      setSerachShowOverlay(false);
-                    }
-                  }}
-                />
-                <SearchIcon onClick={searchDataFucn} />
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
+          )}
+        </div>
+      }
       <Cart open={openCart} toggleCartDrawer={toggleCartDrawer} />
     </>
   );

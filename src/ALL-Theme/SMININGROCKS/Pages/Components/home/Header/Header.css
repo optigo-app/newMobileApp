@@ -656,6 +656,9 @@
         padding-inline: 15px !important;
     }
 
+    .MainlogogMobileImage {
+        width: 125px !important;
+    }
 
     .Smining-Top-Header-fixed {
         margin-inline: 10px !important;
@@ -707,6 +710,7 @@
     }
 
     .mobileViewFirstDiv2 {
+        min-height: 50px;
         display: flex !important;
         align-items: center !important;
     }
@@ -813,9 +817,7 @@
         width: 120% !important;
     }
 
-    .MainlogogMobileImage {
-        width: 125px !important;
-    }
+   
 }
 
 @media screen and (max-width:1300px) {

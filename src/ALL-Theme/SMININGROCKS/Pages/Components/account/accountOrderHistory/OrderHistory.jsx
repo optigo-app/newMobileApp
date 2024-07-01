@@ -6,6 +6,8 @@ import AccountOrderHistory from "../../../jsonFile/account/AccountOrderHistoryAp
 import axios from "axios";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
 import { formatAmount } from "../../../../Utils/globalFunctions/GlobalFunction";
+import { FiArrowLeft } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 // import ReactPaginate from 'react-paginate';
 const OrderHistory = () => {
   const [orderHistoryData, setOrderHistoryData] = useState([]);
@@ -15,6 +17,7 @@ const OrderHistory = () => {
   const [orderInfo, setOrderInfo] = useState(false);
   const [ukey, setUkey] = useState('');
   const [image_path, setImagePath] = useState('');
+  const navigation = useNavigate();
 
   // const [itemOffset, setItemOffset] = useState(0);
   // const itemsPerPage = 4;
@@ -179,6 +182,14 @@ const OrderHistory = () => {
       {/* <div className="text-center text-secondary w-100 fs-4 fw-bold mt-2 pt-2 pb-2 yourOrderHistory bg_oh">
         Your Order History
       </div> */}
+      <div style={{ display: 'flex', width: '100%', alignItems: 'center', padding: '0px 0px 0px 5px', borderBottom: '1px solid lightgray', backgroundColor: 'white', zIndex: '111111' }}>
+        <FiArrowLeft style={{ height: '25px', color: "#7d7f85", width: '25px' }} onClick={() => navigation('/account')} />
+        <div style={{ width: '85%', display: 'flex', justifyContent: 'center' }}>
+          <p className='accountPageTitle'>Order History</p>
+
+        </div>
+      </div>
+
       {loaderOH ? (
         <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box>
       ) : (
@@ -194,7 +205,7 @@ const OrderHistory = () => {
                           {e?.OrderPrefix}
                           {e?.orderno}
                         </div>
-                        <div className={`d-flex align-items-center  ${getStatusColor(e?.b2c_MasterManagement_ProgressStatusId )} fs-5 fs_small fs_Small_2 pad_Setup`} style={{ textTransform: 'uppercase' }} >
+                        <div className={`d-flex align-items-center  ${getStatusColor(e?.b2c_MasterManagement_ProgressStatusId)} fs-5 fs_small fs_Small_2 pad_Setup`} style={{ textTransform: 'uppercase' }} >
                           <div className="px-2">
                             <CircleIcon sx={{ fontSize: "10px" }} />
                           </div>
@@ -210,7 +221,7 @@ const OrderHistory = () => {
                         <span className="text-danger">{e?.TotalQuantity}</span>)
                       </div>
                     </div>
-                    
+
                     <div className="py-2 pe-5 w-50 d-flex fs_price_oh _color fw-bold center_price px_change">
                       <div dangerouslySetInnerHTML={{ __html: e?.Currencysymbol }} ></div>{" "}
                       <div className="px-1">{formatAmount(e?.orderAmountwithvat)}</div>

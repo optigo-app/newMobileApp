@@ -22,9 +22,9 @@ export default function WithoutLoginCart() {
                     margin: "170px 0px",
                 }}
             >
-                <img src={noData} style={{height: '180px', width: '190px'}} />
+                <img src={noData} style={{ height: '180px', width: '190px' }} />
 
-                <p style={{fontWeight: 600, fontSize: '20px'}}>Missing Cart Items?</p>
+                <p style={{ fontWeight: 600, fontSize: '20px' }}>Missing Cart Items?</p>
                 <button style={{
                     height: '35px',
                     width: '150px',
@@ -36,6 +36,7 @@ export default function WithoutLoginCart() {
                     borderRadius: '5px',
                     marginTop: '5px'
                 }} onClick={() => navigation('/signin')}>Login</button>
+                {/* // }} onClick={() => navigation('/LoginOption')}>Login</button> */}
             </div>
         </div>
     )

@@ -182,6 +182,7 @@
 
     .prod_img {
         min-height: 300px !important;
+        object-fit: contain!important;
         height: 300px !important;
     }
 
@@ -190,6 +191,7 @@
 @media screen and (max-width: 1490px) {
     .prod_img {
         min-height: 300px !important;
+        object-fit: contain!important;
         height: 300px !important;
     }
 }
@@ -213,6 +215,11 @@
 
 @media screen and (max-width: 1441px) {
 
+
+    .smilingMobileProductListSideBar {
+        margin-top: 10px;
+    }
+
     .smilingWebProductListSideBar {
         display: none;
     }
@@ -234,6 +241,7 @@
     .prod_img {
         min-height: 400px !important;
         height: 400px !important;
+        object-fit: contain !important;
     }
 
     .smilingProductImageMain {
@@ -246,6 +254,8 @@
     .prod_img {
         min-height: 300px !important;
         height: 300px !important;
+        object-fit: contain !important;
+
     }
 }
 
@@ -304,6 +314,8 @@
     .prod_img {
         min-height: 200px !important;
         height: 200px !important;
+        object-fit: contain !important;
+
     }
 
     .productTitleLine p {
@@ -344,6 +356,8 @@
 
     .prod_img {
         width: 100% !important;
+        object-fit: contain !important;
+
     }
 
 }
@@ -439,6 +453,8 @@
     background-size: cover;
     background-position: center;
     transition: all 0.7s ease;
+    object-fit: contain !important;
+
 }
 
 .prod_imgFiletrHide {
@@ -447,6 +463,8 @@
     height: 500px;
     background-size: cover;
     background-position: center;
+    object-fit: contain !important;
+
     transition: all 0.7s ease;
 }
 
@@ -457,6 +475,8 @@
     height: 250px;
     background-size: cover;
     background-position: center;
+    object-fit: contain !important;
+
     transition: all 0.7s ease;
 }
 
@@ -464,6 +484,8 @@
     width: 100%;
     min-height: 350px;
     height: 350px;
+    object-fit: contain !important;
+
     background-size: cover;
     background-position: center;
     transition: all 0.7s ease;
@@ -474,6 +496,8 @@
 .prod_img1 {
     width: 100% !important;
     min-height: 412px !important;
+    object-fit: contain !important;
+
     background-size: cover;
     background-position: center;
     transition: all 0.7s ease;
@@ -485,6 +509,7 @@
     height: 600px;
     background-size: cover;
     background-position: center;
+    object-fit: contain !important;
     transition: all 0.7s ease;
 }
 
@@ -493,6 +518,7 @@
     min-height: 412px;
     height: 700px;
     background-size: cover;
+    object-fit: contain !important;
     background-position: center;
     transition: all 0.7s ease;
 }
@@ -500,7 +526,8 @@
 .prod_img3 {
     width: 100%;
     min-height: 412px;
-    height: 412px;
+        object-fit: contain!important;
+        height: 412px;
     background-size: cover;
     background-position: center;
     transition: all 0.7s ease;
@@ -562,8 +589,10 @@
 .listing-card {
     height: auto;
     background-color: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    /* border: 1px solid rgba(0, 0, 0, 0.08); */
     overflow: hidden;
+    border-radius: 10px;
 }
 
 
@@ -665,14 +694,21 @@
 }
 
 .listing-features {
-    display: flex;
+    /* display: flex; */
     justify-content: space-between;
     padding: 0px 10px 0px 10px;
     font-size: 11px;
-    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    /* border-top: 1px solid rgba(0, 0, 0, 0.04); */
     color: #4a5568;
 }
 
+.feature-DesignN{
+    font-size: 8px;
+    margin: 0px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
 .listing-features4 {
     display: flex;
     justify-content: space-between;
@@ -691,6 +727,17 @@
     line-height: 1.5;
     filter: contrast(10.4);
     color: #424242;
+}
+
+
+.sortItemLabelProduct{
+    height: 45px;
+    border-bottom: 1px solid lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: black;
+    font-weight: 600;
 }
 
 @media screen and (max-width: 1400px) {
@@ -865,14 +912,14 @@
 
     .cart-icon {
         position: absolute;
-        top: 0px !important;
-        left: 0px !important;
+        top: 5px !important;
+        left: 10px !important;
     }
 
     .wishlist-icon {
         position: absolute;
-        top: 0px !important;
-        right: 0px !important;
+        top: 5px !important;
+        right: 10px !important;
     }
 }
 
@@ -904,7 +951,7 @@
         flex-direction: row !important;
         flex-wrap: wrap;
         gap: 2px;
-        margin: 5px;
+        /* margin: 5px; */
     }
 
     .smilingProductMain {
@@ -920,7 +967,7 @@
         width: 100%;
         font-size: 0.875rem;
         font-weight: 700;
-        height: 5vh;
+        height: auto;
     }
 
     .price {
@@ -1009,7 +1056,7 @@
     }
 
     .smilingAllProductDataMainMobile {
-        gap: 2px;
+        gap: 0px!important;
     }
 
     .smilingProductImageMain {
@@ -1017,7 +1064,8 @@
     }
 
     .main-ProdcutListConatiner {
-        width: 49.6%;
+        width: 49.2%;
+        margin: 2px 1px;
     }
 
     .background-image-container {
@@ -1054,7 +1102,7 @@
     }
 
     .listing-features {
-        padding: 5px;
+        padding: 1px;
         font-size: 10.5px;
     }
 
@@ -1155,7 +1203,23 @@
         letter-spacing: 0px !important;
     }
 
+    .cart-icon {
+        margin: 0px !important;
+        min-width: 44px !important;
+        position: absolute!important;
+        top: 5px!important;
+        left: 0px!important;
+        width: 10px;
+    }
 
+    .wishlist-icon {
+        margin: 0px !important;
+        min-width: 44px !important;
+        position: absolute;
+        top: 5px;
+        right: 0px!important;
+        width: 10px;
+    }
 }
 
 
@@ -1164,16 +1228,7 @@
         display: none !important;
     }
 
-
-    .cart-icon {
-        margin: 0px !important;
-        min-width: 44px !important;
-    }
-
-    .wishlist-icon {
-        margin: 0px !important;
-        min-width: 44px !important;
-    }
+  
 
 
     .smilingProductSubMain {
@@ -1189,16 +1244,11 @@
         gap: 2px;
     }
 
-    .cart-icon {
-        position: absolute;
-        top: 5px;
-        left: 8px;
-        width: 10px;
-    }
 
-    .smilingProductImageMain {
+
+    /* .smilingProductImageMain {
         padding: 10px 2px 0px 8px;
-    }
+    } */
 
     .main-ProdcutListConatiner {
         width: 49%;
@@ -1307,23 +1357,6 @@
         border-right: 0.01rem solid #d9d9d9 !important;
         height: 35px;
     }
-
-    .cart-icon {
-        position: absolute;
-        top: 5px;
-        left: 8px;
-        width: 10px;
-    }
-
-    .wishlist-icon {
-        position: absolute;
-        top: 5px;
-        right: 20px;
-        width: 10px;
-    }
-
-
-
 
     .part-content {
         display: flex;

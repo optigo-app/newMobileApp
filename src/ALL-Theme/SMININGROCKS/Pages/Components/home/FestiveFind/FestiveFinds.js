@@ -18,7 +18,19 @@ export default function FestiveFinds() {
 
     return (
         <div id='elveeGiftMainId'>
-            <p className='gorGiftBoxMainTitleMobile'>Gifting Made Easy</p>
+
+            <div className='FestiveMainImage'>
+                <img src={`${storImagePath()}/images/promoMainBanner/PromoBanner1.jpg`} style={{ width: '100%', marginTop: '0px' }} />
+                {/* {islogin === 'true' && <div className='festiveBox'>
+                    <p className='smilingFestiMainTitle1'>LAB GROWN DIAMONDS</p>
+                    <p className='smilingFestiMainTitle2' style={{ fontSize: '40px', margin: '0px' }}>Festive Finds!</p>
+                    <div>
+                        <button className='DiscoverBtn' onClick={handleNaviagtion}>DISCOVER MORE</button>
+                    </div>
+                </div>} */}
+            </div>
+
+            {/* <p className='gorGiftBoxMainTitleMobile'>Gifting Made Easy</p>
             <div className='gorGiftMain'>
                 <div className='gorGiftBox1'>
                     <div>
@@ -40,7 +52,7 @@ export default function FestiveFinds() {
                         <img loading="lazy" src={`${storImagePath()}/images/HomePage/Promo/Set/1/promoSetBanner1Img4.jpg`} className='gorGiftBox1Images' />
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* <div className='gorLookBookMain' style={{
                 display: 'flex',

@@ -4,7 +4,7 @@ import Footer from '../home/Footer/Footer'
 import { CommonAPI } from '../../../Utils/API/CommonAPI';
 import { Button, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { IoArrowBackOutline } from "react-icons/io5";
+import { IoArrowBack, IoArrowBackOutline } from "react-icons/io5";
 import { useSetRecoilState } from 'recoil';
 import { CartListCounts, WishListCounts } from '../../../../../Recoil/atom';
 import { GetCount } from '../../../Utils/API/GetCount';
@@ -23,6 +23,47 @@ export default function Payment() {
 
     const setCartCount = useSetRecoilState(CartListCounts)
     const setWishCount = useSetRecoilState(WishListCounts)
+
+
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setIsLoading(true);
+                const storedData = localStorage.getItem('loginUserDetail');
+                const data = JSON.parse(storedData);
+                const customerid = data.id;
+                // const customerEmail = data.userid;
+                // setUserEmail(customerEmail);
+                const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+                const { FrontEnd_RegNo } = storeInit;
+                const combinedValue = JSON.stringify({
+                    FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
+                });
+                const encodedCombinedValue = btoa(combinedValue);
+                const body = {
+                    "con": `{\"id\":\"\",\"mode\":\"GETSHIPINGADDRESS\",\"appuserid\":\"${data.userid}\"}`,
+                    "f": "Delivery (fetchData)",
+                    p: encodedCombinedValue
+                };
+                const response = await CommonAPI(body);
+                if (response.Data?.rd) {
+                    const defaultAddr = response.Data?.rd.find(addr => addr.isdefault === 1);
+                    setSelectedAdd(defaultAddr);
+                } else {
+                    alert('nodata')
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        const selectedAddressId = localStorage.getItem('selectedAddressId');
+        if(!selectedAddressId){
+            fetchData();
+        }
+    }, []);
 
     useEffect(() => {
         let loginData = JSON.parse(localStorage.getItem('loginUserDetail'));
@@ -155,8 +196,11 @@ export default function Payment() {
                 </div>
             )}
             <div className='smilingPaymentMain'>
+                <p className="SmiCartListTitle">
+                    <IoArrowBack style={{ height: '25px', width: '25px', marginRight: '10px' }} onClick={() => navigation('/CartPage')} />Order Summary
+                </p>
                 <div className='smilingPaymentMainWeb'>
-                    <div class="bg-imageCart">
+                    {/* <div class="bg-imageCart">
                         <div class="overlay"></div>
                         <div class="text-container">
                             <div className='textContainerData'>
@@ -169,34 +213,28 @@ export default function Payment() {
                                 <img src={`${storImagePath()}/images/HomePage/MainBanner/image/featuresImage.png`} className='featherImage' />
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
-                    <div className="filterDivcontainerPaymetPage" style={{ width: '100%', height: '60px' }}>
+                    {/* <div className="filterDivcontainerPaymetPage" style={{ width: '100%', height: '60px' }}>
                         <div className="partCart" style={{ flex: '20%', cursor: 'pointer' }} onClick={() => navigation('/Delivery')} >
                             <span className='cartPageTopLink'>Back</span>
                         </div>
                         <div className="divider"></div>
 
                         <div className="partCart HideBlackViewPaymentTop" style={{ flex: '20%' }}>
-                            {/* <p className='cartPageTopLink' onClick={handleOpen}>Add New Address</p> */}
                         </div>
 
                         <div className="divider HideBlackViewPaymentTop"></div>
 
                         <div className="partCart HideBlackViewPaymentTop" style={{ flex: '20%' }}>
                             <div style={{ display: 'flex', }}>
-                                {/* <p
-                                        className="cartPageTopLink"
-                                    >
-                                        Clear All
-                                    </p> */}
+                          
                             </div>
                         </div>
 
                         <div className="divider HideBlackViewPaymentTop"></div>
 
                         <div className="partCart HideBlackViewPaymentTop" style={{ flex: '20%' }}>
-                            {/* <p style={{ margin: '0px 10px', fontSize: '16px', fontWeight: 600, cursor: 'pointer', color: '#7d7f85', textDecoration: 'underline' }} onClick={handleClickOpenOrderRemark}>{cartSelectData?.OrderRemarks ? 'View & Edit Remark' : 'Add Order Remark'}</p> */}
                         </div>
                         <div className="divider HideBlackViewPaymentTop"></div>
 
@@ -204,26 +242,25 @@ export default function Payment() {
                             <Button
                                 className="cartPageTopBtn"
                                 onClick={handlePayment}
-                            // style={{ position: 'absolute', right: '0px', height: '50px' }}
                             >
                                 Continue
                             </Button>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className='smilingPaySub1Main'>
                         <div className='smilingPaySub1'>
                             {/* <IoArrowBackOutline style={{ height: '40px', width: '60px', cursor: 'pointer' }} /> */}
                             <div className='smilingPaySub1Box1'>
-                                <p className='PaymentMainTitle' style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e' }}>Payment Card Method</p>
+                                <p className='PaymentMainTitleMain' style={{ fontSize: '22px', fontWeight: 500, color: '#5e5e5e' }}>Payment Card Method</p>
 
                                 <div className='BilingMainApyment' style={{ marginTop: '40px' }}>
                                     <p className='PaymentMainTitle' style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e' }}>Billing Address :</p>
-                                    <p className='AddressTitle'>Name : <span className='AdressData'>{selectedAdd.shippingfirstname} {selectedAdd.shippinglastname}</span></p>
-                                    <p className='AddressTitle'>Address : <span className='AdressData'>{selectedAdd.street}</span></p>
-                                    <p className='AddressTitle'>City : <span className='AdressData'>{selectedAdd.city}-{selectedAdd.zip}</span></p>
-                                    <p className='AddressTitle'>State : <span className='AdressData'>{selectedAdd.state},{selectedAdd.country}</span></p>
-                                    <p className='AddressTitle'>Mobile : <span className='AdressData'>{selectedAdd.shippingmobile}</span></p>
+                                    <p className='AddressTitle'>Name : <span className='AdressData'>{selectedAdd?.shippingfirstname} {selectedAdd?.shippinglastname}</span></p>
+                                    <p className='AddressTitle'>Address : <span className='AdressData'>{selectedAdd?.street}</span></p>
+                                    <p className='AddressTitle'>City : <span className='AdressData'>{selectedAdd?.city}-{selectedAdd?.zip}</span></p>
+                                    <p className='AddressTitle'>State : <span className='AdressData'>{selectedAdd?.state},{selectedAdd?.country}</span></p>
+                                    <p className='AddressTitle'>Mobile : <span className='AdressData'>{selectedAdd?.shippingmobile}</span></p>
                                 </div>
                             </div>
                             <div className='smilingPaySub1Box2'>
@@ -245,23 +282,25 @@ export default function Payment() {
                                     </div>
                                 </div>
                                 <div className='deliveryShiipingMain'>
-
-                                <p className='PaymentMainTitle' style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e' }}>Shipping Address :</p>
-                                <div style={{ marginTop: '0px' }}>
-                                    <p className='OrderNamMAinTitle' style={{ fontSize: '25px', margin: '0px', fontWeight: 500, color: '#5e5e5e' }}>{selectedAdd.shippingfirstname} {selectedAdd.shippinglastname}</p>
-                                    <p className='AddressTitle'><span className='AdressData'>{selectedAdd.street}</span></p>
-                                    <p className='AddressTitle'><span className='AdressData'>{selectedAdd.city}-{selectedAdd.zip}</span></p>
-                                    <p className='AddressTitle'><span className='AdressData'>{selectedAdd.state},{selectedAdd.country}</span></p>
-                                    <p className='AddressTitle'><span className='AdressData'>{selectedAdd.shippingmobile}</span></p>
+                                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                        <p className='PaymentMainTitle' style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e' }}>Shipping Address :</p>
+                                        <button className='changeAddressBtnPayment' onClick={() => navigation('/Delivery')}>Change</button>
+                                    </div>
+                                    <div style={{ marginTop: '0px' }}>
+                                        <p className='OrderNamMAinTitle' style={{ fontSize: '25px', margin: '0px', fontWeight: 500, color: '#5e5e5e' }}>{selectedAdd?.shippingfirstname} {selectedAdd?.shippinglastname}</p>
+                                        <p className='AddressTitle'><span className='AdressData'>{selectedAdd?.street}</span></p>
+                                        <p className='AddressTitle'><span className='AdressData'>{selectedAdd?.city}-{selectedAdd?.zip}</span></p>
+                                        <p className='AddressTitle'><span className='AdressData'>{selectedAdd?.state},{selectedAdd?.country}</span></p>
+                                        <p className='AddressTitle'><span className='AdressData'>{selectedAdd?.shippingmobile}</span></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* <div className='smilingPaymentBtn'>
+                    <div className='smilingPaymentBtn'>
                         <button onClick={handlePayment} className='paymentBtn'>PAY ON ACCOUNT</button>
-                    </div> */}
+                    </div>
 
                     {/* <div style={{ display: 'flex', justifyContent: 'center',marginTop: '-100px' }}>
                         <img src='http://gstore.orail.co.in/assets/newfolder/images/account/blue-box.jpg' className='smilingPayentImg' />
@@ -315,7 +354,7 @@ export default function Payment() {
                     </div>
                 </div> */}
             </div>
-            <div
+            {/* <div
                 style={{
                     position: 'absolute',
                     bottom: 'auto',
@@ -323,7 +362,7 @@ export default function Payment() {
                 }}
             >
                 <Footer />
-            </div>
+            </div> */}
         </div>
     )
 }

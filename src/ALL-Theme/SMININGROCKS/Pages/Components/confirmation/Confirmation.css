@@ -18,15 +18,17 @@
     align-items: center;
 }
 
+
 .contiShopiBtn{
     height: 40px;
     width: 200px;
     outline: none;
-    background-color: white;
-    border: 1px solid lightgray;
+    background-color: #ffd814;
+    border: none;
     font-weight: 500;
     border-radius: 5px;
 }
+
 
 @media screen and (max-width: 1000px) {
 

@@ -13,6 +13,7 @@ import {
   Divider,
   Drawer,
   Grid,
+  Skeleton,
   Snackbar,
   Tab,
   Tabs,
@@ -39,7 +40,7 @@ import noFoundImage from "../../../../assets/image-not-found.jpg"
 import { FullProInfoAPI } from "../../../../../Utils/API/FullProInfoAPI";
 import { findCsQcIdDiff, findDiaQcId, findMetalType, findMetalTypeId, findValueFromId, storImagePath } from "../../../../../Utils/globalFunctions/GlobalFunction";
 import { SingleProductAPI } from "../../../../../Utils/API/SingleProductAPI";
-import { IoArrowBackOutline } from "react-icons/io5";
+import { IoArrowBack, IoArrowBackOutline } from "react-icons/io5";
 import { getDesignPriceList } from "../../../../../Utils/API/PriceDataApi";
 import { productListApiCall } from "../../../../../Utils/API/ProductListAPI";
 import { FilterListAPI } from "../../../../../Utils/API/FilterListAPI";
@@ -129,6 +130,8 @@ export default function CartPage() {
   const [isLodingSave, setIsLoadingSave] = useState(false);
   const [removeItemAutoCode, setRemoveItemAutoCode] = useState('');
   const [removeItemDesignNumber, setRemoveItemDesignNumber] = useState('');
+  const [isPriceShow, setIsPriceShow] = useState('');
+  const [totalValue, setTotlaValue] = useState(0);
 
 
   const setProdFullInfo = async (paramDesignno) => {
@@ -176,7 +179,12 @@ export default function CartPage() {
   }, [])
 
   useEffect(() => {
+
+
+
+
     const storeInit = JSON.parse(localStorage.getItem('storeInit'))
+    setIsPriceShow(storeInit.IsPriceShow);
     setStoreInitData(storeInit)
   }, []);
 
@@ -320,6 +328,8 @@ export default function CartPage() {
 
 
   useEffect(() => {
+
+
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
     const storeInit = JSON.parse(localStorage.getItem('storeInit'));
 
@@ -588,9 +598,18 @@ export default function CartPage() {
 
       if (response?.Data) {
         setCartListData(response?.Data?.rd);
+        setMainRemarks(response?.Data?.rd[0]?.OrderRemarks);
+        setRemarks(response?.Data?.rd[0]?.Remarks);
         setIsLoading(false);
-        setMainRemarks(response?.Data?.rd[0].OrderRemarks);
-        setRemarks(response?.Data?.rd[0].Remarks);
+
+        if (response?.Data?.rd) {
+          let totalUnitCost = response?.Data?.rd.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue.UnitCost;
+          }, 0);
+
+          console.log('UnitCostUnitCost', totalUnitCost);
+          setTotlaValue(totalUnitCost);
+        }
       }
     } catch (error) {
       console.error("Error:", error);
@@ -601,8 +620,6 @@ export default function CartPage() {
 
   const handleRemove = async (data) => {
 
-    console.log('cccccccc deeee', cartSelectData);
-    console.log('cccccccc deeee', removeItemDesignNumber);
     try {
       setIsLoading(true);
       setDialogOpen(false);
@@ -1101,13 +1118,14 @@ export default function CartPage() {
         };
 
         await CommonAPI(body).then(async (res) => {
+          console.log('ressssssssssssssss', res);
           if (res?.Data?.rd[0]?.msg === "success") {
             await getCartAndWishListData()
             await getCountFunc()
             await getCartData()
             await handleSubmit(cartSelectData);
 
-            toast.success("Product Updated successFully !!!")
+            // toast.success("Product Updated successFully !!!")
             setQtyUpdateWaiting(false);
             setIsLoadingSave(false);
 
@@ -1303,7 +1321,7 @@ export default function CartPage() {
   const handlePlaceOrder = () => {
     let priceData = cartListData.reduce((total, item) => total + item.UnitCost, 0).toFixed(2)
     localStorage.setItem('TotalPriceData', priceData)
-    navigation("/Delivery");
+    navigation("/Payment");
     window.scrollTo(0, 0);
   }
 
@@ -1329,13 +1347,25 @@ export default function CartPage() {
     }
   }, [cartSelectData]);
 
+  function truncateText(text, maxLength) {
+    if (text?.length <= maxLength) {
+      return text;
+    } else {
+      return text?.substr(0, maxLength) + '...';
+    }
+  }
+
+  const [imgLoading, setImgLoading] = useState(true);
+
+  const handelImgLoad = () => {
+    setImgLoading(false)
+  }
+
   console.log('reeeeeeeeeeeeeeeeeeeeeeeeeee ()', cartListData);
   console.log('FinalPrice() * lastEnteredQuantityFinalPrice() * lastEnteredQuantity', FinalPrice() * lastEnteredQuantity);
   return (
     <>
-      <div
-        className="paddingTopMobileSet"
-      >
+      <div>
         {isLoading && (
           <div className="loader-overlay">
             <CircularProgress className="loadingBarManage" />
@@ -1483,7 +1513,10 @@ export default function CartPage() {
               zIndex: "111",
             }}
           >
-            {cartListData?.length !== 0 && !isLoading &&
+            <p className="SmiCartListTitle">
+              <IoArrowBack style={{ height: '25px', width: '25px', marginRight: '10px' }} onClick={() => navigation('/')} />My Cart
+            </p>
+            {/* {cartListData?.length !== 0 && !isLoading &&
               <div class="bg-imageCart">
                 <div class="overlay"></div>
                 <div class="text-container">
@@ -1497,7 +1530,7 @@ export default function CartPage() {
                   </div>
                 </div>
               </div>
-            }
+            } */}
 
             {/* <div className="backErrorMobile" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               {cartListData?.length !== 0 && (
@@ -1521,7 +1554,7 @@ export default function CartPage() {
 
             </div> */}
             <div>
-              {cartListData?.length !== 0 && !isLoading &&
+              {/* {cartListData?.length !== 0 && !isLoading &&
                 <div
                   className="smilingListCartTopButton"
                   style={{ marginTop: "0px" }}
@@ -1575,17 +1608,56 @@ export default function CartPage() {
                     </div>
                   </div>
                 </div>
-              }
+              } */}
               {cartListData?.length !== 0 && (
-                <>
-                  <button
-                    className="placeOrderCartPageBtnMobile"
-                    onClick={handlePlaceOrder}
-                    style={{ display: dialogOpen && 'none' }}
+                <div>
+                  {!dialogOpen && <div className="smiCartPagePlaceOrderBtn">
+                    <div>
+                      {isPriceShow === 1 && <span
+                        style={{
+                          fontWeight: "500",
+                          fontSize: "18px",
+                          color: "black",
+                          display: 'flex'
+                        }}
+                      >
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: decodeEntities(
+                              currData?.Currencysymbol
+                            ),
+                          }}
+                          style={{ fontFamily: "sans-serif" }}
+                        />
+                        {(totalValue).toFixed(3)}
+                      </span>}
+                    </div>
+                    <button
+                      className="placeOrderCartPageBtnMobile"
+                      onClick={handlePlaceOrder}
+                    >
+                      Place Order
+                    </button>
+                  </div>}
+                  {/* <div
+                    className="smilingCartPagePlaceOrderBtnMainWeb"
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      margin: "-50px 25px 0px 20px",
+                      paddingBottom: "50px",
+                    }}
                   >
-                    Place Order
-                  </button>
-                </>
+                    <button
+                      className="placeOrderCartPageBtn"
+                      onClick={(event) => {
+                        navigation("/Delivery");
+                      }}
+                    >
+                      Place Order
+                    </button>
+                  </div> */}
+                </div>
               )}
 
             </div>
@@ -1638,8 +1710,9 @@ export default function CartPage() {
                           {cartListData?.map((item, index) => (
                             <div
                               key={item.id}
-                              className={`smiling-cartPageBoxMain ${cartSelectData && cartSelectData.id === item.id ? 'selected' : ''}`}
-                              onClick={async () => {
+                              className={`smiling-cartPageBoxMain`}
+                            >
+                              <div style={{ display: 'flex' }} onClick={async () => {
                                 setCartSelectData(item);
                                 setProdFullInfo(item.designno);
                                 getSizeData(item.autocode);
@@ -1650,16 +1723,59 @@ export default function CartPage() {
                                   let data = res[0]
                                   setSingleProdData(data)
                                 })
-                              }}
-                            >
-                              <img
-                                src={item.DefaultImageName != '' ? `${imageURL}/${yKey}/${item.DefaultImageName}` : noFoundImage}
-                                alt="#"
-                                className="cartImageShow"
-                                onError={(e) => {
-                                  e.target.src = noFoundImage;
-                                }}
-                                onClick={async () => {
+                              }}>
+                                <div className="smiling-cartPageBoxMain-imageMain">
+                                  <img
+                                    src={item.DefaultImageName != '' ? `${imageURL}/${yKey}/${item.DefaultImageName}` : noFoundImage}
+                                    alt="#"
+                                    className="cartImageShow"
+                                    onError={(e) => {
+                                      e.target.src = noFoundImage;
+                                    }}
+
+                                  />
+                                </div>
+                                <div
+                                  className="smilingCartBox1"
+                                  style={{ padding: "5px" }}
+                                >
+                                  <p style={{ margin: "10px 0px 5px 0px", fontSize: '12px' }}>
+                                    {truncateText(item.TitleLine, 70)}
+                                    <span style={{ fontWeight: 500 }}>
+                                      - {item.Mastermanagement_CategoryName}({item.designno})
+                                    </span>
+                                  </p>
+                                  {isPriceShow === 1 && <span
+                                    style={{
+                                      fontWeight: "500",
+                                      fontSize: "18px",
+                                      color: "black",
+                                      display: 'flex'
+                                    }}
+                                  >
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html: decodeEntities(
+                                          currData?.Currencysymbol
+                                        ),
+                                      }}
+                                      style={{ fontFamily: "sans-serif" }}
+                                    />
+                                    {
+                                      item?.UnitCost
+                                    }
+                                  </span>}
+                                  {/* 
+                                  <p style={{ position: 'absolute', bottom: '13px' }}>{item?.Remarks ? 'Remark : ' + item?.Remarks : ''}</p>
+                                  <div className="bottomBtnCart" style={{ display: 'flex', justifyContent: 'space-between', position: 'absolute', bottom: '10px', width: '35%' }}>
+                                    <p style={{ margin: '0px', fontSize: '13px', cursor: 'pointer', color: '#7d7f85', textDecoration: 'underline' }}>Item Remark</p>
+                                    <p style={{ margin: '0px', fontSize: '13px', cursor: 'pointer', color: '#7d7f85', textDecoration: 'underline' }}>Remove</p>
+                                  </div> */}
+                                </div>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row-reverse' }}>
+                                <button className="cartRemoveBtn" onClick={() => handleRemove(item)}>Remove</button>
+                                <button className="cartRemoveBtn" style={{ marginInline: '10px' }} onClick={async () => {
                                   setCartSelectData(item);
                                   setProdFullInfo(item.designno);
                                   getSizeData(item.autocode);
@@ -1670,90 +1786,7 @@ export default function CartPage() {
                                     let data = res[0]
                                     setSingleProdData(data)
                                   })
-                                }}
-                              />
-                              <div className="listing-featuresN" style={{ marginTop: '30px' }}>
-                                <p className="designNo">{item.designno}</p>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', margin: '5px 10px 0px 0px' }}>
-                                  <div>
-                                    <div className='feature'>
-                                      <p>
-                                        <span className="feature-count">NWT :{" "} </span> {item?.MetalWeight}
-                                      </p>
-                                    </div>
-                                    <div className='feature'>
-                                      <p style={{ margin: '0px' }}>
-                                        <span className="feature-count">DWT :{" "} </span>  {(item?.Rec_DiamondWeight).toFixed(3)} /{" "}
-                                        {item?.totaldiamondpcs}
-                                      </p>
-                                    </div>
-                                    <div className='feature'>
-                                      <p>
-                                        {/* <span className="feature-count">{item?.designno}</span> */}
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <div>
-                                    <div className='feature'>
-                                      <p>
-                                        <span className="feature-count">CWT :{" "} </span>  {item?.Rec_CSWeight} /{" "}
-                                        {item?.totalcolorstonepcs}
-                                      </p>
-                                    </div>
-                                    <div className='feature'>
-                                      <p style={{ margin: '0px' }}>
-                                        <span className="feature-count">GWT :{" "}  </span>   {(item?.grossweight).toFixed(3)}
-                                      </p>
-                                    </div>
-                                    {/* <div className='feature'>
-                                    <p>
-                                      <span className="feature-count" style={{ display: 'flex' }}>
-                                        <div className="currencyFont" dangerouslySetInnerHTML={{ __html: decodeEntities(currData?.Currencysymbol) }} />
-                                        {(
-                                      (((mtrdData?.V ?? 0) / currData?.CurrencyRate) + (mtrdData?.W ?? 0)) +
-                                      (dqcData ?? 0) +
-                                      (csqcData ?? 0) +
-                                      (sizeMarkup ?? 0) +
-                                      (metalUpdatedPrice() ?? 0) +
-                                      (diaUpdatedPrice() ?? 0) +
-                                      (colUpdatedPrice() ?? 0)
-                                    ).toFixed(2)}
-                                    </span>
-                                    </p>
-                                  </div> */}
-                                  </div>
-                                </div>
-
-                                <p style={{ position: 'absolute', bottom: '13px' }}>{item?.Remarks ? 'Remark : ' + item?.Remarks : ''}</p>
-                                <div className="bottomBtnCart" style={{ display: 'flex', justifyContent: 'space-between', position: 'absolute', bottom: '10px', width: '35%' }}>
-                                  {/* <p onClick={() => handleClickOpenItemRemark(item.autocode, item.designno)} style={{ margin: '0px', fontSize: '13px', cursor: 'pointer', color: '#7d7f85', textDecoration: 'underline' }}>Item Remark</p> */}
-                                  <p style={{ margin: '0px', fontSize: '13px', cursor: 'pointer', color: '#7d7f85', textDecoration: 'underline' }}>Item Remark</p>
-                                  <p style={{ margin: '0px', fontSize: '13px', cursor: 'pointer', color: '#7d7f85', textDecoration: 'underline' }}
-
-                                  >Remove</p>
-
-                                  {/* <p style={{ margin: '0px', fontSize: '13px', cursor: 'pointer', color: '#7d7f85', textDecoration: 'underline' }}
-                                    onClick={() => handleClickOpenSingleRemove(item)}
-                                  >Remove</p> */}
-                                </div>
-
-                                {/* <div
-                                style={{
-                                  cursor: "pointer",
-                                  position: "absolute",
-                                  right: "0px",
-                                  top: "0px",
-                                  backgroundColor: "black",
-                                  borderRadius: "2px",
-                                  opacity: "0.8",
-                                }}
-                                onClick={() => handleRemove(item)}
-                              >
-                                <CloseIcon
-                                  sx={{ color: "white", fontSize: "22px" }}
-                                />
-                              </div> */}
-
+                                }}>Update</button>
                               </div>
                             </div>
                           ))}
@@ -2472,11 +2505,14 @@ export default function CartPage() {
           }}
           className="mobileFootreCs"
         >
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div >
       <Dialog
-        onClose={() => setDialogOpen(false)}
+        onClose={() => {
+          setDialogOpen(false);
+          setIsLoadingSave(false);
+        }}
         open={dialogOpen}
         // fullWidth
         // maxWidth={"xl"}
@@ -2493,7 +2529,10 @@ export default function CartPage() {
                   top: "12px",
                   borderRadius: "12px",
                 }}
-                onClick={() => setDialogOpen(false)}
+                onClick={() => {
+                  setDialogOpen(false);
+                  setIsLoadingSave(false);
+                }}
               >
                 <CloseIcon sx={{ color: "black", fontSize: "30px" }} />
               </div>
@@ -2503,6 +2542,18 @@ export default function CartPage() {
               style={{ display: !prodSelectData && !cartSelectData && "none" }}
             >
               <div className="popUpcontainer">
+                {imgLoading && (
+                  <>
+                    <Skeleton
+                      sx={{
+                        width: "100%",
+                        height: "800px",
+                      }}
+                      variant="rounded"
+                    />
+                  </>
+
+                )}
                 <img
                   src={
                     storeInitData?.DesignImageFol +
@@ -2513,6 +2564,7 @@ export default function CartPage() {
                     borderRadius: "12px",
                     width: "100%",
                   }}
+                  onLoad={handelImgLoad}
                 />
 
                 <div style={{ width: '100%' }}>
@@ -2824,7 +2876,7 @@ export default function CartPage() {
                       </div>
                     </div>
 
-                    <MdDeleteOutline style={{ height: '30px', width: '30px' , color:'#ff0000a8' }} onClick={handleRemove}/>
+                    {/* <MdDeleteOutline style={{ height: '30px', width: '30px', color: '#ff0000a8' }} onClick={handleRemove} /> */}
 
                     <span>
                       Price :
@@ -2885,39 +2937,53 @@ export default function CartPage() {
                     </div>
                   </div>
                   <div className="similingCartPageBotttomMain">
-                    <button
-                      style={{
-                        border: "none",
-                        outline: "none",
-                        backgroundColor: "#e1e1e1",
-                        padding: "10px 17px",
-                        width: '100%',
-                        position: 'absolute',
-                        bottom: '0px',
-                        borderRadius: "4px",
-                      }}
-                    >
-                      {!isLodingSave ?
+                    {!isLodingSave ?
+
+                      <button
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          backgroundColor: "#e1e1e1",
+                          padding: "10px 17px",
+                          width: '100%',
+                          position: 'absolute',
+                          bottom: '0px',
+                          borderRadius: "4px",
+                        }}
+                        onClick={handleCartUpdate}
+                      >
                         <span
                           style={{
                             fontSize: "16px",
                             fontWeight: "500",
                           }}
                           className="SaveBtnCart"
-                          onClick={handleCartUpdate}
                         >
                           Apply
                         </span>
-                        :
+                      </button>
+                      :
+                      <button
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          backgroundColor: "#e1e1e1",
+                          padding: "10px 17px",
+                          width: '100%',
+                          position: 'absolute',
+                          bottom: '0px',
+                          borderRadius: "4px",
+                        }}
+                      >
                         <span
                           className="SaveBtnCart"
-                          style={{ display: 'flex' , justifyContent: 'center', alignItems:'center', height:'23px' }}
+                          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '23px' }}
                         >
                           <CircularProgress style={{ height: '20px', width: '20px' }} />
                         </span>
+                      </button>
+                    }
 
-                      }
-                    </button>
                   </div>
                 </div>
               </div>
