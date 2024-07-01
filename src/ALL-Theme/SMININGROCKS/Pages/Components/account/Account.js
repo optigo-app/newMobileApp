@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../home/Header/Header'
 import './Account.css'
 import { Box, CircularProgress, IconButton, InputAdornment, Tab, Tabs, TextField, Typography } from '@mui/material'
-import Footer from '../home/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
-import ManageAddress from './address/ManageAddress';
-import OrderHistory from './accountOrderHistory/OrderHistory';
-
-import AccountLedger from './accountLedger/AccountLedger';
-import DesignWiseSalesReport from '../sales/DesignWiseSalesReport/DesignWiseSalesReport';
 import { loginState } from '../../../../../Recoil/atom';
 import { useSetRecoilState } from 'recoil';
-import YourProfile from './yourProfile/YourProfile';
-import ChangePassword from './changePassword/ChangePassword';
-import SalesReport from '../sales/salesReport/SalesReport';
-import QuotationJob from './quotationFilters/QuotationJob';
-import QuotationQuote from './QuotationQuote/QuotationQuote';
-import Sales from '../sales/Sales/Sales';
 import { accountDetailPage, accountDetailPages, accountValidation } from '../../../Utils/globalFunctions/GlobalFunction';
+import { FaChevronRight } from "react-icons/fa";
+import { LuBox } from "react-icons/lu";
+import { MdFavoriteBorder } from "react-icons/md";
+import { IoGiftOutline } from "react-icons/io5";
+import { FaHeadset } from "react-icons/fa6";
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -67,13 +59,15 @@ const tabIndicator = {
 
 export default function Account() {
 
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(3);
     const [value1, setValue1] = useState(0);
     const naviagation = useNavigate();
     const setIsLoginState = useSetRecoilState(loginState)
     const navigation = useNavigate();
     const [accountInner, setAccountInner] = useState(accountDetailPages());
-
+    const [fName, setFname] = useState('');
+    const [lastNamr, setLasnane] = useState('');
+    const [userMobile, setUserMobile] = useState('');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -83,6 +77,13 @@ export default function Account() {
         setValue1(newValue);
     }
 
+    useEffect(() => {
+        const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
+
+        setFname(loginUserDetail?.firstname);
+        setLasnane(loginUserDetail?.lastname);
+        setUserMobile(loginUserDetail?.defaddress_shippingmobile)
+    })
     const handleLogout = () => {
         setIsLoginState('false')
         localStorage.setItem('LoginUser', 'false');
@@ -95,69 +96,88 @@ export default function Account() {
         localStorage.removeItem('UploadLogicalPath');
         localStorage.removeItem('remarks');
         localStorage.removeItem('registerMobile');
-        localStorage.removeItem('allproductlist');
         naviagation('/')
         window.location.reload();
     }
 
     return (
-        <div className='accountPagTabSection'>
-            {/* {isLoading && (
-                <div className="loader-overlay">
-                    <CircularProgress />
+        <div>
+            <div className='Smiling-AccountMain'>
+                <div className='titleMain'>
+                    <div style={{width :'100%'}}>
+                        <p style={{margin: '0px' , fontSize: '25px', fontWeight: 600, paddingInline: '10px'}}>{fName + ' ' + lastNamr}</p>
+                        <p style={{margin: '0px', fontSize: '15px', paddingInline: '10px' }}>+91 {userMobile}</p>
+
+                        <div style={{display: 'flex', justifyContent: 'space-around', width: '100%' , marginTop: '10px', paddingInline: '10px'}}>
+                            <div className='boxMainTopSection'  onClick={() => naviagation('/OrderHistory')}>
+                                <LuBox style={{marginLeft: '15px'}}/>
+                                <p style={{margin: '0px 0px 0px 10px' , fontWeight: 600, fontSize: '15px'}}>Orders</p>
+                            </div>
+                            <div className='boxMainTopSection' style={{marginRight: '0px'}} onClick={() => naviagation('/myWishList')}>
+                                <MdFavoriteBorder style={{marginLeft: '15px'}}/>
+                                <p style={{margin: '0px 0px 0px 10px' , fontWeight: 600, fontSize: '15px'}}>Wishlist</p>
+                            </div>
+                        </div>
+
+                        <div style={{display: 'flex', justifyContent: 'space-around', width: '100%' , marginTop: '10px', paddingInline: '10px'}}>
+                            <div className='boxMainTopSection'>
+                                <IoGiftOutline style={{marginLeft: '15px'}}/>
+                                <p style={{margin: '0px 0px 0px 10px' , fontWeight: 600, fontSize: '15px'}}>Coupons</p>
+                            </div>
+                            <div className='boxMainTopSection' style={{marginRight: '0px'}}>
+                                <FaHeadset style={{marginLeft: '15px'}}/>
+                                <p style={{margin: '0px 0px 0px 10px' , fontWeight: 600, fontSize: '15px'}}>Help Center</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-            )} */}
+                <div className='smling-AccountTabMain'>
+                    <div className='smlingAccountTabMobileView YourAccountPageTabs' style={{ marginTop: '15px' }}>
+                        <div className='menuMainAccount' onClick={() => naviagation('/YourProfile')}>
+                            <p className='menuMainAccountTitle'>Your Profile</p>
+                            <FaChevronRight />
+                        </div>
+                        <div className='menuMainAccount' onClick={() => naviagation('/OrderHistory')}>
+                            <p className='menuMainAccountTitle'>Order History</p>
+                            <FaChevronRight />
+                        </div>
+                        <div className='menuMainAccount' onClick={() => naviagation('/ManageAddress')}>
+                            <p className='menuMainAccountTitle'>Manage Address</p>
+                            <FaChevronRight />
+                        </div>
+                        {accountValidation() && <div className='menuMainAccount' onClick={() => naviagation('/MobileViewCompo')}>
+                            <p className='menuMainAccountTitle'>Account</p>
+                            <FaChevronRight />
+                        </div>}
+                        <div className='menuMainAccount' onClick={() => naviagation('/ChangePassword')}>
+                            <p className='menuMainAccountTitle'>Change Password</p>
+                            <FaChevronRight />
+                        </div>
 
-            <div>
-                <div className='Smiling-AccountMain'>
-                    <p className='SmilingAccountTitle youraccountpagesec'>Your Account</p>
-                    <div className='smling-AccountTabMain'>
-                        <Box sx={{ width: '100%' }}>
-                            <div className='smlingAccountTabWebView'>
-                                <Box sx={{ display: 'flex', justifyContent: 'center', borderBottom: 1, borderColor: 'divider' }}>
-                                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example"  >   {/*  orientation="vertical" indicatorColor="#7d7f85" */}
-                                        <Tab label="Your Profile" {...a11yProps(0)} />
-                                        <Tab label="ORDER HISTORY" {...a11yProps(1)} />
-                                        <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
-                                        {accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
-                                        <Tab label="CHANGE PASSWORD" {...a11yProps(accountValidation() ? 4 : 3)} />
-                                    </Tabs>
-                                    <p className='smilingAccountLogout' onClick={handleLogout}>LOG OUT</p>
-                                </Box>
+                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
+                            <p className='smilingAccountLogoutMobile' onClick={handleLogout}>LOG OUT</p>
+                        </div>
+                    </div>
+
+
+                    {/* <Box sx={{ width: '100%' }}>
+                        <CustomTabPanel value={value} index={0}>
+                            <div>
+                                <YourProfile />
                             </div>
-                            <div className='smlingAccountTabMobileView YourAccountPageTabs'>
-                                <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                                    <Tabs value={value} orientation="vertical" onChange={handleChange} sx={{ width: '100%' }} >   {/*  indicatorColor="#7d7f85" */}
-                                        <Tab label="Your Profile" {...a11yProps(0)} sx={{ textAlign: 'start', width: '90%', borderColor: 'divider' }} />
-                                        <Tab label="ORDER HISTORY" {...a11yProps(1)} />
-                                        <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
-                                        {accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
-                                        <Tab label="CHANGE PASSWORD" {...a11yProps(accountValidation() ? 4 : 3)} />
-                                    </Tabs>
-                                </Box>
-                                {/* <div>
-                                    <p className='smilingAccountLogoutMobile' onClick={handleLogout}>LOG OUT</p>
-                                </div> */}
+                        </CustomTabPanel>
+
+                        <CustomTabPanel value={value} index={1}>
+                            <div>
+                                <OrderHistory />
                             </div>
-
-                            <CustomTabPanel value={value} index={0}>
-                                <div>
-                                    <YourProfile />
-                                </div>
-                            </CustomTabPanel>
-
-                            <CustomTabPanel value={value} index={1}>
-                                <div>
-                                    <OrderHistory />
-                                </div>
-                            </CustomTabPanel>
-                            <CustomTabPanel value={value} index={2} className="manageAddressSec">
-                                <ManageAddress />
-                            </CustomTabPanel>
-
-                            {/* {accountValidation() && <CustomTabPanel value={value} index={3} className="accountSalesPage"> */}
-                            {accountValidation() && <CustomTabPanel value={value} index={3} className="accountSalesPage">
-                                {/* <QuotationFilters /> */}
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={2} className="manageAddressSec">
+                            <ManageAddress />
+                        </CustomTabPanel>
+                        {accountValidation() &&
+                            <CustomTabPanel value={value} index={3} className="accountSalesPage">
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                     <Tabs value={value1} className='accountTabSection' variant="scrollable" onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator }} scrollButtons="auto">
                                         {
@@ -165,13 +185,6 @@ export default function Account() {
                                                 return <Tab label={e?.tabLabel} {...a11yProps(i)} sx={{ color: "#7d7f85" }} key={i} />
                                             })
                                         }
-
-                                        {/* {accountDetailPage(1163) && <Tab label="Quote" {...a11yProps(0)} sx={{ color: "#7d7f85" }} />}
-                                        {accountDetailPage(1164) && <Tab label="Job" {...a11yProps(1)} sx={{ color: "#7d7f85" }} />}
-                                        {accountDetailPage(1157) && <Tab label="Sales" {...a11yProps(2)} sx={{ color: "#7d7f85" }} />}
-                                        {accountDetailPage(1314) && <Tab label="Sales Report" {...a11yProps(3)} sx={{ color: "#7d7f85" }} />}
-                                        {accountDetailPage(17020) && <Tab label="Design Wise Sales Report" {...a11yProps(4)} sx={{ color: "#7d7f85" }} />}
-                                        {accountDetailPage(1159) && <Tab label="Account Ledger" {...a11yProps(5)} sx={{ color: "#7d7f85" }} />} */}
                                     </Tabs>
                                 </Box>
                                 {
@@ -198,20 +211,16 @@ export default function Account() {
                                         </React.Fragment>
                                     })
                                 }
-                            </CustomTabPanel>}
-                            <CustomTabPanel value={value} index={accountValidation() ? 4 : 3}>
-                                <div>
-                                    <ChangePassword />
-                                </div>
                             </CustomTabPanel>
-
-
-                        </Box>
-                    </div>
-
+                        }
+                        <CustomTabPanel value={value} index={accountValidation() ? 4 : 3}>
+                            <div>
+                                <ChangePassword />
+                            </div>
+                        </CustomTabPanel>
+                    </Box> */}
                 </div>
             </div>
-            <Footer />
         </div>
     )
 }

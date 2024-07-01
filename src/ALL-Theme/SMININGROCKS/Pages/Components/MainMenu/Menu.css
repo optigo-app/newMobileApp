@@ -1,0 +1,37 @@
+
+.imagesViewCategoryDiv{
+    width: 50%;
+    padding: 2px;
+}
+.imagesViewCategory{
+    height: 90%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.colletioname{
+    font-family: 'PT Sans', sans-serif;
+    font-size: 13px;
+}
+
+.menuItemfont{
+    font-size: 15px;
+    height: 35px;
+    letter-spacing: 0.4;
+    cursor: pointer;
+    font-family: 'TT Commons', sans-serif;
+}
+
+.tabMainSmilingMobile .MuiTabs-indicator{
+    background-color: black!important;
+}
+
+.tabMainMenu{
+    border-bottom: 1px solid lightgray!important;
+}
+
+.underline-button{
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
+}

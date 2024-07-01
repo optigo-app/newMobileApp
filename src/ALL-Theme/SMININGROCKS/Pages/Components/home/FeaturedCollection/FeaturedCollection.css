@@ -1,7 +1,7 @@
 .linkingLoveMain {
     display: flex;
-    margin-top: 50px;
-    margin-inline: 90px;
+    /* margin-top: 50px; */
+    /* margin-inline: 90px; */
 }
 
 .linkingLove {
@@ -74,7 +74,7 @@
 
 .linkingLoveImageDesign {
     height: 645px;
-    margin-top: 5px;
+    /* margin-top: 5px; */
 }
 
 .likingLoveImages {
@@ -100,9 +100,9 @@
 
     .linkingLoveMain {
         display: flex;
-        margin-top: 50px;
+        /* margin-top: 50px; */
         flex-direction: column;
-        margin-inline: 10px;
+        /* margin-inline: 10px; */
     }
 
     .linkingLove {
@@ -118,7 +118,7 @@
     .linkingLoveImageDesign {
         height: 100%;
         width: 100%;
-        margin-top: 5px;
+        /* margin-top: 5px; */
     }
     .likingLoveImages{
         height: 250px;

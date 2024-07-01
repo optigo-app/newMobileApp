@@ -29,27 +29,36 @@ import CompanyData from './ComapnayData/CompanyData';
 import CountdownTimer from './CountDownTimer/CountDownTimer';
 import AffiliationData from './PromoComponent/BrandsComponent/AffiliationData';
 import SocialMedia from './Gallery/SocialMediaSlider';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { companyLogo, loginState } from '../../../../../Recoil/atom';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { CartListCounts, WishListCounts, companyLogo, designSet, loginState, productDataNew } from '../../../../../Recoil/atom';
 import { Helmet } from 'react-helmet';
+import { GetCount } from '../../../Utils/API/GetCount';
+import { productListApiCall } from '../../../Utils/API/ProductListAPI';
+import { getDesignPriceList } from '../../../Utils/API/PriceDataApi';
 
 export default function Home() {
-  const islogin = useRecoilValue(loginState);
+
+
   const [companyTitleLogo, setCompanyTitleLogo] = useRecoilState(companyLogo)
   const [title, setTitle] = useState();
   const [favicon, setFavIcon] = useState();
-  const location = useLocation();
+  const navigation = useNavigate();
+  const [islogin, setislogin] = useRecoilState(loginState);
+  const setCartCount = useSetRecoilState(CartListCounts)
+  const setWishCount = useSetRecoilState(WishListCounts)
+  const setPdData = useSetRecoilState(productDataNew)
+  const setDesignList = useSetRecoilState(designSet)
+
 
   useEffect(() => {
     const fetchData = async () => {
       // const APIURL = 'http://zen/api/';
-      const APIURL = 'https://api.optigoapps.com/storev26/store.aspx';
-      // const APIURL = 'https://api.optigoapps.com/test/store.aspx';
-
+      // const APIURL = 'https://api.optigoapps.com/storev26/store.aspx';
+      const APIURL = 'https://api.optigoapps.com/test/store.aspx';
 
       const header = {
         Authorization: 'Bearer optigo_json_api',
-        domain: (window.location.hostname === 'localhost' || window.location.hostname === 'zen') ? 'estore.orail.co.in' : window.location.hostname,
+        domain: (window.location.hostname === 'localhost' || window.location.hostname === 'zen') ? 'demo.orail.co.in' : window.location.hostname,
         // domain: 'estore.orail.co.in',
         version: 'V7',
         sp: "1"
@@ -295,15 +304,60 @@ export default function Home() {
     storImagePath();
 
   }, []);
-  const [isLoginStatus, setIsloginStatus] = useState();
+
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const ismobile = queryParams.get('ismobile');
+    const token = queryParams.get('token');
+    console.log('aaaaaaaaaaaaaaaaaaaa',ismobile);
+    console.log('aaaaaaaaaaaaaaaaaaaa',islogin);
+    console.log('aaaaaaaaaaaaaaaaaaaa',token);
+    if (ismobile === '1' && islogin === 'false' && token !== undefined && token !== null && token !== '') {
+      handleSubmit();
+    }
+  }, [])
+
+  const handleSubmit = async () => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const token = queryParams.get('token');
+    try {
+      // const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+      // const { FrontEnd_RegNo } = storeInit;
+      const combinedValue = JSON.stringify({
+        userid: '', mobileno: '', pass: '', mobiletoken: `${token}`, FrontEnd_RegNo: '' 
+      });
+      const encodedCombinedValue = btoa(combinedValue);
+      const body = {
+        "con": "{\"id\":\"\",\"mode\":\"WEBLOGINMOBILETOKEN\"}",
+        "f": "LoginWithEmail (handleSubmit)",
+        p: encodedCombinedValue
+      };
+      const response = await CommonAPI(body);
+      console.log('ressssssssssssssssss', response);
+      if (response.Data.rd[0].stat === 1) {
+        setislogin('true')
+        localStorage.setItem('LoginUser', 'true')
+        localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
+        navigation('/');
+        pdDataCalling()
+        designDataCall()
+        getCountFunc()
+        getDesignPriceList()
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+    }
+  };
+
+
   useEffect(() => {
     if (islogin) {
-      setIsloginStatus(islogin)
       window.scrollTo(0, 0);
     }
   }, [])
 
-  console.log('islogin', islogin);
   //  let domainName =  `((window.location.hostname === 'localhost' || window.location.hostname === 'zen') ? 'astore.orail.co.in' : window.location.hostname)/ufcc/image/`
 
   // const [title, setTitle] = useState();
@@ -320,9 +374,34 @@ export default function Home() {
 
   console.log();
 
+
+
+  const getCountFunc = async () => {
+    await GetCount().then((res) => {
+      if (res) {
+        setCartCount(res.CountCart)
+        setWishCount(res.WishCount)
+      }
+    })
+  }
+
+
+  let pdDataCalling = async () => {
+    await productListApiCall().then((res) => {
+      setPdData(res)
+    })
+  }
+
+  let designDataCall = async () => {
+    await designSet().then((res) => {
+      setDesignList(res)
+    })
+  }
+
   useEffect(() => {
     handleHomePageLoad();
   }, []);
+
 
   return (
     <div className='paddingTopMobileSet' style={{ backgroundColor: 'white', paddingTop: '0px' }}>
@@ -331,36 +410,37 @@ export default function Home() {
           <title>{title}</title>
           <link rel="icon" type="image/png" href={favicon} sizes="16x16" />
         </Helmet>
+
         {/* {islogin == 'true' ? (
           <>
             <Video />
             <Footer />
           </>
         ) : */}
-          {/* <> */}
-            <Video />
-            <ShopByCategory />
+        {/* <> */}
+        <Video />
+        <ShopByCategory />
+        <FestiveFinds />
+        <SmilingBrides />
+        <FeaturedCollection />
+        <SustainAbility />
 
-            {/* <SmilingRock /> */}
-            <PromoComponent1 />
+        {/* <SmilingRock /> */}
+        {/* <PromoComponent1 />
             <BrandsComponent />
             <PromoComponent2 />
-            <FestiveFinds />
             <OurCraftmanShip />
             <GallerySlider />
             <CompanyData />
             <AffiliationData />
-            <SocialMedia />
-            {/* <DaimondEveyone /> */}
-            {/* <SmilingBrides /> */}
-            {/* <FeaturedCollection /> */}
-            <div style={{ marginTop: '60px' }}>
-              {/* <SustainAbility /> */}
-            </div>
-            {/* <ShopifySection /> */}
-            {/* <ShopOurInstagram /> */}
-            {/* <Footer /> */}
-          {/* </>
+            <SocialMedia /> */}
+        {/* <DaimondEveyone /> */}
+        {/* <div style={{ marginTop: '60px' }}>
+            </div> */}
+        {/* <ShopifySection /> */}
+        {/* <ShopOurInstagram /> */}
+        {/* <Footer /> */}
+        {/* </>
         } */}
       </div>
     </div>

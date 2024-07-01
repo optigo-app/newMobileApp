@@ -24,7 +24,7 @@ export default function FeaturedCollection() {
         // nextArrow: false,
     };
 
-    
+
 
     const handleMouseEnterRing1 = () => {
         setRing1ImageChange(true)
@@ -63,17 +63,17 @@ export default function FeaturedCollection() {
                     <Slider {...settings} >
                         <div className='linkRingLove'>
 
-                            <div>
+                            <div className='linkRingLoveImgMain'>
                                 <div className='linkLoveRing1'>
-                                    <img src={!ring1ImageChange ? `${storImagePath()}/images/HomePage/Promo/Set/1/promoSetBanner1Img1.png`:`${storImagePath()}/images/HomePage/Promo/Set/1/promoSetBanner1Img1Hover.png`} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
+                                    <img src={`${storImagePath()}/images/promoset2Banner/promoSetBanner1Img1.jpg`} className='likingLoveImages' />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
                                 </div>
                             </div>
-                            <div>
+                            <div className='linkRingLoveImgMain'>
                                 <div className='linkLoveRing2'>
-                                    <img src={!ring2ImageChange ? `${storImagePath()}/images/HomePage/Promo/Set/1/promoSetBanner1Img2.png`:`${storImagePath()}/images/HomePage/Promo/Set/1/promoSetBanner1Img2Hover.png`} className='likingLoveImages' onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
+                                    <img src={`${storImagePath()}/images/promoset2Banner/promoSetBanner1Img2.jpg`} className='likingLoveImages' />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -83,17 +83,19 @@ export default function FeaturedCollection() {
 
                         <div className='linkRingLove'>
 
-                            <div>
+                            <div className='linkRingLoveImgMain'>
+
                                 <div className='linkLoveRing1'>
-                                    <img src={!ring1ImageChange ? `${storImagePath()}/images/HomePage/Promo/Set/1/promoSetBanner1Img1.png`:`${storImagePath()}/images/HomePage/Promo/Set/1/promoSetBanner1Img1Hover.png`} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
+                                    <img src={`${storImagePath()}/images/promoset2Banner/promoSetBanner1Img3.jpg`} className='likingLoveImages' />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
                                 </div>
                             </div>
-                            <div>
+                            <div className='linkRingLoveImgMain'>
+
                                 <div className='linkLoveRing2'>
-                                    <img src={!ring2ImageChange ? `${storImagePath()}/images/HomePage/Promo/Set/1/promoSetBanner1Img2.png`:`${storImagePath()}/images/HomePage/Promo/Set/1/promoSetBanner1Img2Hover.png`} className='likingLoveImages' onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
+                                    <img src={`${storImagePath()}/images/promoset2Banner/promoSetBanner1Img4.jpg`} className='likingLoveImages' />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -103,17 +105,19 @@ export default function FeaturedCollection() {
 
                         <div className='linkRingLove'>
 
-                            <div>
+                            <div className='linkRingLoveImgMain'>
+
                                 <div className='linkLoveRing1'>
-                                    <img src={!ring1ImageChange ?  `${storImagePath()}/images/HomePage/Promo/Set/1/promoSetBanner1Img1.png`:`${storImagePath()}/images/HomePage/Promo/Set/1/promoSetBanner1Img1Hover.png`} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
+                                    <img src={`${storImagePath()}/images/promoset2Banner/promoSetBanner1Img5.jpg`} className='likingLoveImages' />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
                                 </div>
                             </div>
-                            <div>
+                            <div className='linkRingLoveImgMain'>
+
                                 <div className='linkLoveRing2'>
-                                    <img src={!ring2ImageChange ? `${storImagePath()}/images/HomePage/Promo/Set/1/promoSetBanner1Img2.png`:`${storImagePath()}/images/HomePage/Promo/Set/1/promoSetBanner1Img2Hover.png`} className='likingLoveImages' onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
+                                    <img src={`${storImagePath()}/images/promoset2Banner/promoSetBanner1Img6.jpg`} className='likingLoveImages' />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -123,12 +127,12 @@ export default function FeaturedCollection() {
                     </Slider>
                 </div>
                 <div className='linkingLoveImage'>
-                    <img src={`${storImagePath()}/images/HomePage/Promo/Set/1/promoSetMainBanner.jpg`} className='linkingLoveImageDesign' />
+                    <img src={`${storImagePath()}/images/promoset2Banner/promoSetMainBanner.jpg`} className='linkingLoveImageDesign' />
                 </div>
             </div>
 
 
-            <div className='linkingLoveMain'>
+            {/* <div className='linkingLoveMain'>
                 <div className='linkingLoveImage'>
                     <img src={`${storImagePath()}/images/HomePage/Promo/Set/2/promoSetMainBanner2.jpg`} className='linkingLoveImageDesign' />
                 </div>
@@ -199,7 +203,7 @@ export default function FeaturedCollection() {
                     </Slider>
                 </div>
 
-            </div>
+            </div> */}
         </div>
     )
 }

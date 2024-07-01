@@ -307,8 +307,8 @@ const ProdDetail = () => {
       setCSQOptId([csQCVar?.QualityId, csQCVar?.ColorId])
 
     } else {
-      let ref = `${ColorStoneQualityColor[0].Quality}-${ColorStoneQualityColor[0].color}`
-      let ref1 = [ColorStoneQualityColor[0].QualityId, ColorStoneQualityColor[0].ColorId]
+      let ref = `${ColorStoneQualityColor[0]?.Quality}-${ColorStoneQualityColor[0]?.color}`
+      let ref1 = [ColorStoneQualityColor[0]?.QualityId, ColorStoneQualityColor[0]?.ColorId]
       setCSQOpt(ref)
       setCSQOptId(ref1)
 
@@ -566,7 +566,7 @@ const ProdDetail = () => {
     let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
     setProductData(localProductData)
     getColorImagesData(localProductData.autocode);
-    getTheImageSetImage(localProductData.autocode);
+    // getTheImageSetImage(localProductData.autocode);
     setWishListFlag(localProductData?.wishCheck)
     setCartFlag(localProductData?.checkFlag)
     getSizeData(localProductData.autocode);
@@ -579,10 +579,7 @@ const ProdDetail = () => {
   const getTheImageSetImage = (autoCode) => {
     const storedData = localStorage.getItem('designsetlist');
     const jsonData = JSON.parse(storedData);
-    const filteredData = jsonData.filter(item => item.autocode === autoCode);
-
-    // console.log('filteredData', filteredData);
-
+    const filteredData = jsonData?.filter(item => item.autocode === autoCode);
     if (filteredData.length > 0) {
       const num = filteredData[0].designsetuniqueno;
       const defaultImage = filteredData[0].DefaultImageName;
@@ -2854,12 +2851,12 @@ const ProdDetail = () => {
             </div>
           </div> */}
           {/* <SmilingRock /> */}
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', paddingBlock: '30px' }}>
+      {/* <div style={{ display: 'flex', justifyContent: 'center', paddingBlock: '30px' }}>
         <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => window.scrollTo(0, 0)}>BACK TO TOP</p>
-      </div>
+      </div> */}
     </div >
   );
 }

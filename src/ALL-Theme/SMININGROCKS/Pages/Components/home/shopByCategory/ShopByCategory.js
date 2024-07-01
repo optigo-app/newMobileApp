@@ -21,7 +21,7 @@ export default function ShopByCategory() {
 
   return (
     <div>
-      <div className='linkingLoveMain' style={{ marginTop: '-10px' }}>
+      <div className='linkingLoveMain'>
         <div className='linkingLoveImage'>
           <img src={`${storImagePath()}/images/promoset2Banner/promoSetMainBanner2.jpg`} className='linkingLoveImageDesign' onClick={() => navigation('/productpage')}/>
         </div>

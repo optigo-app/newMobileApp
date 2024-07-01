@@ -39,6 +39,9 @@ import { Card } from "react-bootstrap";
 import ProductFilterSkelton from "./ProductFilterSkelton";
 import { FaChevronDown } from "react-icons/fa";
 import { CiMenuKebab } from "react-icons/ci";
+import { FaFilter } from "react-icons/fa";
+import { BsFilterLeft } from "react-icons/bs";
+import { FaEye } from "react-icons/fa";
 
 function valuetext(value) {
   return `${value}°C`;
@@ -436,7 +439,6 @@ const ProductList = () => {
       // console.log("priceDataApi",priceDataApi);
 
       const updatedData = await Promise?.all(data?.map(async (product) => {
-        // debugger
 
         const newPriceData = priceDataApi?.rd?.find((pda) => pda.A == product.autocode)
 
@@ -877,7 +879,6 @@ const ProductList = () => {
   // setProductApiData2(newWishCheckData)
   // if(newWishCheckData?.length && newWishCheckData){
   //   console.log("updateWish",newWishCheckData);
-  //   // debugger
   //   localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
   // }
 
@@ -1241,7 +1242,7 @@ const ProductList = () => {
     const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
 
     const body = {
-      "con": `{\"id\":\"Store\",\"mode\":\"getdesignnolist\",\"appuserid\":\"${UserEmail}\"}`,
+      "con": `{\"id\":\"Store\",\"mode\":\"getdesignnolist\",\"appuserid\":\"${Customer_id?.userid}\"}`,
       "f": " useEffect_login ( getdataofcartandwishlist )",
       "p": encodedCombinedValue
     }
@@ -1386,7 +1387,7 @@ const ProductList = () => {
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
 
         const body = {
-          con: `{\"id\":\"\",\"mode\":\"addwishlist\",\"appuserid\":\"${UserEmail}\"}`,
+          con: `{\"id\":\"\",\"mode\":\"addwishlist\",\"appuserid\":\"${Customer_id?.userid}\"}`,
           f: "AddToWishListIconClick (addwishlist)",
           p: encodedCombinedValue,
         };
@@ -1411,7 +1412,7 @@ const ProductList = () => {
 
         let encodedCombinedValue = btoa(JSON.stringify(Data))
         const body = {
-          con: `{\"id\":\"\",\"mode\":\"removeFromWishList\",\"appuserid\":\"${UserEmail}\"}`,
+          con: `{\"id\":\"\",\"mode\":\"removeFromWishList\",\"appuserid\":\"${Customer_id?.userid}\"}`,
           f: "RemoveFromWishlistIconClick (removeFromWishList)",
           p: encodedCombinedValue,
         }
@@ -1459,8 +1460,8 @@ const ProductList = () => {
           "metalcolorid": Number(`${product?.MetalColorid}`),
           "stockno": "",
           // "DQuality": `${product?.diamondquality?.split(",")[0]}`,
-          "DQuality": `${diaQColOpt.split("#")[0]}`,
-          "DColor": `${diaQColOpt.split("#")[1]}`,
+          "DQuality": `${diaQColOpt.split("#")[0] ?? ""}`,
+          "DColor": `${diaQColOpt.split("#")[1] ?? ""}`,
           "cmboMetalType": `${product?.updMT}`,
           "AdditionalValWt": Number(`${product?.AdditionalValWt ?? 0}`),
           "BrandName": `${findValueFromId("brand", product?.Brandid)?.BrandName}`,
@@ -1489,7 +1490,7 @@ const ProductList = () => {
           "MasterManagement_labname": "",
           "MetalColorName": `${product?.updMC}`,
           "MetalColorid": Number(`${product?.MetalColorid}`),
-          "MetalPurity": `${product?.updMT.split(" ")[1]}`,
+          "MetalPurity": `${product?.updMT.split(" ")[1] ?? ""}`,
           "MetalPurityid": Number(`${product?.MetalTypeid}`),
           "MetalTypeName": `${product?.updMT.split(" ")[0]}`,
           "MetalTypeid": Number(`${product?.IsInReadyStock}`),
@@ -1508,7 +1509,7 @@ const ProductList = () => {
           "UnitCostWithmarkup": Number(`${product?.ismrpbase === 1 ? product?.mrpbaseprice : PriceWithMarkupFunction(product?.markup, product?.price, currData?.CurrencyRate)?.toFixed(2)}`),
           "colorstonecolorname": `${cSQopt?.split('-')[1] ?? ""}`,
           "colorstonequality": `${cSQopt?.split('-')[0] ?? ""}`,
-          "diamondcolorname": `${JSON.parse(localStorage.getItem("loginUserDetail"))?.cmboDiaQualityColor.split("#@#")[1]}`,
+          "diamondcolorname": `${JSON.parse(localStorage.getItem("loginUserDetail"))?.cmboDiaQualityColor.split("#@#")[1] ?? ""}`,
           "diamondpcs": Number(`${product?.updDPCS}`),
           "diamondquality": `${JSON.parse(localStorage.getItem("loginUserDetail"))?.cmboDiaQualityColor.split("#@#")[0]}`,
           "diamondsetting": `${product?.diamondsetting ?? ""}`,
@@ -1551,13 +1552,13 @@ const ProductList = () => {
         const wishToCartEncData1 = btoa(JSON.stringify(wishToCartEncData));
 
         const body = {
-          con: `{\"id\":\"\",\"mode\":\"ADDTOCART\",\"appuserid\":\"${UserEmail}\"}`,
+          con: `{\"id\":\"\",\"mode\":\"ADDTOCART\",\"appuserid\":\"${Customer_id?.userid}\"}`,
           f: "AddToCartIconClick (addcartlist)",
           p: encodedCombinedValue,
         };
 
         let body1 = {
-          con: `{\"id\":\"Store\",\"mode\":\"addwishlisttocart\",\"appuserid\":\"${UserEmail}\"}`,
+          con: `{\"id\":\"Store\",\"mode\":\"addwishlisttocart\",\"appuserid\":\"${Customer_id?.userid}\"}`,
           f: "iconclick (addwishlisttocart)",
           p: wishToCartEncData1
         }
@@ -1597,7 +1598,7 @@ const ProductList = () => {
 
         let encodedCombinedValue = btoa(JSON.stringify(Data))
         const body = {
-          con: `{\"id\":\"\",\"mode\":\"removeFromCartList\",\"appuserid\":\"${UserEmail}\"}`,
+          con: `{\"id\":\"\",\"mode\":\"removeFromCartList\",\"appuserid\":\"${Customer_id?.userid}\"}`,
           f: "RemoveFromCartIconClick (removeFromCartList)",
           p: encodedCombinedValue,
         }
@@ -1970,7 +1971,7 @@ const ProductList = () => {
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250, marginInline: '10px' }}
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250, marginInline: '10px', marginTop: '50px' }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -2237,13 +2238,13 @@ const ProductList = () => {
   const [show3ImagesView, setShow3ImageView] = useState(false);
   const [show4ImagesView, setShow4ImageView] = useState(false);
 
-  const hanlde1ImageShow = () =>{
+  const hanlde1ImageShow = () => {
     setShow4ImageView(false)
     setShow3ImageView(false)
     setShow2ImageView(false)
     setShow1ImageView(true)
   }
-  
+
   const handle2ImageShow = () => {
     setShow4ImageView(false)
     setShow1ImageView(false)
@@ -2393,6 +2394,136 @@ const ProductList = () => {
   };
 
 
+  const [activeTab, setActiveTab] = useState("/");
+  const [isOpenShoryBy, setIsOpenShoryBy] = useState(false);
+  const [isOpenImageView, setIsOpenImageView] = useState(false);
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    if (tab === "/shortBy") {
+      toggleShoryBy();
+    }
+    if (tab === "/imageView") {
+      toggleImageView();
+    }
+  };
+
+  const toggleShoryBy = () => {
+    setIsOpenShoryBy((prev) => !prev);
+  };
+
+  const toggleImageView = () => {
+    setIsOpenImageView((prev) => !prev);
+  };
+
+
+  const Newlist = (anchor) => (
+    <Box
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250, height: 'auto' }}
+      role="presentation"
+      onClick={toggleShoryBy}
+      onKeyDown={toggleShoryBy}
+    >
+      <div>
+        <label className="sortItemLabelProduct" style={{ color: '#888', paddingInline: '15px' }}>
+          SORT BY
+        </label>
+        <div style={{ paddingInline: '15px' }}>
+          <label className="sortItemLabelProduct">
+            Recommended
+            <input
+              defaultChecked
+              type="radio"
+              name="sortOption"
+              value="None"
+              onClick={() => { handleSortChange('None'); }}
+            />
+          </label>
+
+          <label className="sortItemLabelProduct">
+            New
+            <input
+              type="radio"
+              name="sortOption"
+              value="New"
+              onClick={() => { handleSortChange('New'); }}
+            />
+          </label>
+
+          <label className="sortItemLabelProduct">
+            In stock
+            <input
+              type="radio"
+              name="sortOption"
+              value="InStock"
+              onClick={() => { handleSortChange('InStock'); }}
+            />
+          </label>
+
+          <label className="sortItemLabelProduct">
+            Price High to Low
+            <input
+              type="radio"
+              name="sortOption"
+              value="PriceHighToLow"
+              onClick={() => { handleSortChange('PRICE HIGH TO LOW'); }}
+            />
+          </label>
+
+
+          <label className="sortItemLabelProduct">
+            Price Low to High
+            <input
+              type="radio"
+              name="sortOption"
+              value="PriceLowToHigh"
+              onClick={() => { handleSortChange('PRICE LOW TO HIGH') }}
+            // onClick={() => { handleSortChange('PRICE LOW TO HIGH'); toggleShoryBy(); }}
+            />
+          </label>
+        </div>
+      </div>
+    </Box>
+  );
+
+
+  const NewlistImageView = (anchor) => (
+    <Box
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250, height: 'auto' }}
+      role="presentation"
+      onClick={toggleImageView}
+      onKeyDown={toggleImageView}
+    >
+      <div>
+        <label className="sortItemLabelProduct" style={{ color: '#888', paddingInline: '15px' }}>
+          SORT BY
+        </label>
+        <div style={{ paddingInline: '15px' }}>
+          <label className="sortItemLabelProduct">
+            Single View
+            <input
+              checked={show1ImagesView}
+              type="radio"
+              name="sortOption"
+              value="None"
+              onClick={() => { hanlde1ImageShow(); toggleImageView(); }}
+            />
+          </label>
+
+          <label className="sortItemLabelProduct">
+            Dubble View
+            <input
+              checked={show2ImagesView}
+              type="radio"
+              name="sortOption"
+              value="New"
+              onClick={() => { handle2ImageShow(); toggleImageView(); }}
+            />
+          </label>
+        </div>
+      </div>
+    </Box>
+  );
 
   return (
     <div id="top">
@@ -2498,6 +2629,22 @@ const ProductList = () => {
         </Box>
       </Modal>
 
+      <Drawer
+        anchor="bottom"
+        open={isOpenShoryBy}
+        onClose={toggleShoryBy}
+      >
+        {Newlist("bottom")}
+      </Drawer>
+
+      <Drawer
+        anchor="bottom"
+        open={isOpenImageView}
+        onClose={toggleImageView}
+      >
+        {NewlistImageView("bottom")}
+      </Drawer>
+
       <div
         style={{
           height: "100%",
@@ -2512,19 +2659,17 @@ const ProductList = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              paddingTop: '30px',
               marginInline: '13%'
             }}
             className='paddingTopMobileSet mainProduct'
           >
             <div style={{ width: '100%' }}>
-              <div class="bg-image">
+              {/* <div class="bg-image">
                 <div class="overlay"></div>
                 <div class="text-container">
                   <div className='textContainerData'>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <p className="designCounttext" style={{ fontSize: '20px', fontWeight: '500', letterSpacing: '1px', textTransform: 'uppercase' }}>
-                        {/* {location?.state?.filtervalue?.FilterVal2 ? location?.state?.filtervalue?.FilterVal2 : location?.state?.filtervalue?.FilterVal1 ? location?.state?.filtervalue?.FilterVal1 : location?.state?.filtervalue?.menuname} */}
                         {menuParamsState?.FilterVal2 ? menuParamsState?.FilterVal2 : menuParamsState?.FilterVal1 ? menuParamsState?.FilterVal1 : menuParamsState?.menuname}
                         &nbsp;{newProData?.length != 0 || ProductApiData2?.length != 0 ? prodCount : 0} <span style={{ textTransform: 'capitalize' }}>Designs</span>
                         <br />
@@ -2534,7 +2679,7 @@ const ProductList = () => {
                     <img src={`${storImagePath()}/images/HomePage/MainBanner/image/featuresImage.png`} className='featherImage' />
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="filterDivcontainer">
                 <div className="part" style={{ flex: '20%' }}>
                   <div className="part-content" onClick={handleFilterShow} style={{ fontSize: '12px' }}>
@@ -2976,8 +3121,8 @@ const ProductList = () => {
                                 open={Boolean(anchorEl)}
                                 onClose={handleCloseN}
                               >
-                                <MenuItem style={{color: 'rgb(123, 123, 123)' , fontSize: '14px'}} onClick={() => {handleCloseN(); hanlde1ImageShow();}}>Single View</MenuItem>
-                                <MenuItem style={{color: 'rgb(123, 123, 123)', fontSize: '14px'}} onClick={() => {handleCloseN(); handle2ImageShow();}}>Double View</MenuItem>
+                                <MenuItem style={{ color: 'rgb(123, 123, 123)', fontSize: '14px' }} onClick={() => { handleCloseN(); hanlde1ImageShow(); }}>Single View</MenuItem>
+                                <MenuItem style={{ color: 'rgb(123, 123, 123)', fontSize: '14px' }} onClick={() => { handleCloseN(); handle2ImageShow(); }}>Double View</MenuItem>
                               </Menu>
                             </div>
                           </div>
@@ -3049,9 +3194,9 @@ const ProductList = () => {
                           ${show2ImagesView ? "listing-cardShow2Image" : ""}
                           ${show4ImagesView ? "listing-cardShow4Image" : ""}`} >
                                   <div className="listing-image">
-                                    {products?.designno === "S24705E" && <p id="labelTag_0002388" className="instockP">IN STOCK</p>}
+                                    {/* {products?.designno === "S24705E" && <p id="labelTag_0002388" className="instockP">IN STOCK</p>}
                                     {products?.designno === "S24705" && <p id="labelTag_0002388" className="instockP">IN STOCK</p>}
-                                    {products?.designno === "MCJ2" && <p id="labelTag_0002388" className="instockP">IN STOCK</p>}
+                                    {products?.designno === "MCJ2" && <p id="labelTag_0002388" className="instockP">IN STOCK</p>} */}
 
                                     <div>
                                       <img
@@ -3059,8 +3204,8 @@ const ProductList = () => {
                                         ${show1ImagesView ? "prod_img1" : ""}
 
                                             ${show2ImagesView ?
-                                              isShowfilter ?
-                                                "prod_img2" : "prod_img2FiletrHider" : ""}
+                                            isShowfilter ?
+                                              "prod_img2" : "prod_img2FiletrHider" : ""}
 
                                             ${show4ImagesView ?
                                             isShowfilter ?
@@ -3146,7 +3291,7 @@ const ProductList = () => {
                                     </div>
                                   </div>
                                   <div className={show4ImagesView ? "listing-features4" : "listing-features"} style={{ marginLeft: '2px' }}>
-                                    <div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                       {ismetalWShow === 1 &&
                                         <div className={show4ImagesView ? "feature4" : 'feature'}>
                                           <p style={{ margin: '0px' }}>
@@ -3156,13 +3301,16 @@ const ProductList = () => {
                                         </div>
                                       }
 
-                                      {(isDaaimongWShow === 1 && (products?.diamondweight !== 0 || products?.diamondpcs !== 0)) &&
+                                      <p className="feature-DesignN">
+                                        {products?.designno}
+                                      </p>
+                                      {/* {(isDaaimongWShow === 1 && (products?.diamondweight !== 0 || products?.diamondpcs !== 0)) &&
                                         <div className={show4ImagesView ? "feature4" : 'feature'}>
                                           <p style={{ margin: '0px' }}>
                                             <span className="feature-count">DWT : </span>
                                             {(isDaaimongWShow === 1 && products?.diamondweight !== 0) && products?.updDWT + '/'}  {(isDaaimonPShow === 1 && products?.diamondpcs !== 0) && products?.updDPCS}</p>
                                         </div>
-                                      }
+                                      } */}
 
                                       {isGrossWShow === 1 &&
                                         <div className={show4ImagesView ? "feature4" : 'feature'}>
@@ -3172,14 +3320,14 @@ const ProductList = () => {
                                         </div>
                                       }
 
-                                      {((isStoneWShow || isStonePShow) === 1 && (products?.totalcolorstoneweight !== 0 || products?.totalcolorstonepcs !== 0)) &&
+                                      {/* {((isStoneWShow || isStonePShow) === 1 && (products?.totalcolorstoneweight !== 0 || products?.totalcolorstonepcs !== 0)) &&
                                         <div className={show4ImagesView ? "feature4" : 'feature'}>
                                           <p style={{ margin: '0px' }}>
                                             <span className="feature-count">CWT :</span>
                                             {(isStoneWShow === 1 && products?.totalcolorstoneweight !== 0) && (Number(products?.updCWT ?? 0)).toFixed(3) + '/'}  {(isStonePShow === 1 && products?.totalcolorstonepcs !== 0) && products?.updCPCS}
                                           </p>
                                         </div>
-                                      }
+                                      } */}
                                     </div>
                                     {/* <div className="mobileDeatilDiv2" style={{ display: 'flex', justifyContent: 'center', height: '20px' }}> */}
 
@@ -3195,13 +3343,11 @@ const ProductList = () => {
                                     {/* </div> */}
 
                                     <div>
-                                      <div className={show4ImagesView ? "feature4" : 'feature'}>
-                                        <p className="feature4DesignNum" style={{ margin: '0px', fontSize: '15px' }}>
-                                          <span className="feature-count">{products?.designno}</span>
-                                        </p>
-                                      </div>
+                                      {/* <div className={show4ImagesView ? "feature4" : 'feature'}>
 
-                                      <p style={{ display: 'flex', margin: '0px' }}>
+                                      </div> */}
+
+                                      <p style={{ display: 'flex', justifyContent: 'center', margin: '0px' }}>
                                         {/* {products?.MetalTypeName} - */}
                                         {/* {isMetalTCShow === 1 && <span>
                                   {products?.updMC} -
@@ -3251,8 +3397,63 @@ const ProductList = () => {
         }
       </div>
       <Footer />
+      <div style={styles.container}>
+        <div style={styles.tab} onClick={toggleDetailDrawer}>
+          <FaFilter style={activeTab === "/" ? styles.activeIcon : styles.icon} />
+          <span style={activeTab === "/" ? styles.activeText : styles.text}>Filter</span>
+        </div>
+        <div style={styles.tab} onClick={() => handleTabChange("/shortBy")}>
+          <BsFilterLeft style={activeTab === "/shortBy" ? styles.activeIcon : styles.icon} />
+          <span style={activeTab === "/shortBy" ? styles.activeText : styles.text}>Short By</span>
+        </div>
+
+        <div style={styles.tab} onClick={() => handleTabChange("/imageView")}>
+          <FaEye style={styles.icon} />
+          <span style={styles.text}>Image View</span>
+        </div>
+      </div>
     </div >
   );
 };
 
 export default ProductList;
+
+
+const styles = {
+  container: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    position: 'fixed',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: '#f0f0f0',
+    height: '60px',
+    borderTop: '1px solid #ccc',
+  },
+  tab: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textDecoration: 'none',
+    flex: 1,
+    color: '#666',
+  },
+  icon: {
+    marginBottom: '5px',
+    fontSize: '20px',
+  },
+  activeIcon: {
+    color: '#0000ff78',
+    fontSize: '20px',
+  },
+  text: {
+    fontSize: '12px',
+  },
+  activeText: {
+    color: '#0000ff78',
+    fontWeight: 'bold',
+    fontSize: '14px'
+  },
+};

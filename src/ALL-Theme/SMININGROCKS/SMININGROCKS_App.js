@@ -56,6 +56,12 @@ import ProductFilterSkelton from './Pages/Components/productPage/ProductFilterSk
 import HomeTab from './Pages/Components/HomeTab'
 import AccountWothoutLogin from './Pages/Components/account/AccountWothoutLogin'
 import WithoutLoginCart from './Pages/Components/home/Header/cartPage/WithoutLoginCart'
+import Menu from './Pages/Components/MainMenu/Menu'
+import YourProfile from './Pages/Components/account/yourProfile/YourProfile'
+import OrderHistory from './Pages/Components/account/accountOrderHistory/OrderHistory'
+import ManageAddress from './Pages/Components/account/address/ManageAddress'
+import MobileViewCompo from './Pages/Components/account/MobileViewCompo'
+import ChangePassword from './Pages/Components/account/changePassword/ChangePassword'
 
 export default function SMININGROCKS_App() {
     const isLoginStatus = useRecoilValue(loginState);
@@ -88,6 +94,16 @@ export default function SMININGROCKS_App() {
                     location.pathname === "/accountledgercredit" ||
                     location.pathname === "/AccountWothoutLogin" ||
                     location.pathname === "/WithoutLoginCart" ||
+                    location.pathname === "/account" ||
+                    location.pathname === "/ChangePassword" ||
+                    location.pathname === "/Delivery" ||
+                    location.pathname === "/MobileViewCompo" ||
+                    location.pathname === "/OrderHistory" ||
+                    location.pathname === "/ManageAddress" ||
+                    location.pathname === "/YourProfile" ||
+                    location.pathname === "/Payment" ||
+                    location.pathname === "/CartPage" ||
+                    location.pathname === "/confirmation" ||
                     location.pathname === "/CurrentVersion") ?
                     null : <Header />}
                 <div>
@@ -131,16 +147,22 @@ export default function SMININGROCKS_App() {
                         <Route path="/term&condition" element={<TermsAndConditions />} />
                         <Route path="/AccountWothoutLogin" element={<AccountWothoutLogin />} />
                         <Route path="/WithoutLoginCart" element={<WithoutLoginCart />} />
+                        <Route path="/Menu" element={<Menu />} />
                         <Route path='/' element={<PrivateRoutes isLoginStatus={isLoginStatus} />}>
                             <Route path="/myWishList" element={<MyWishList />} />
                             <Route path="/productpage/*" element={<ProductList />} />
                             <Route path="/productdetail" element={<ProdDetail />} />
                             <Route path="/Delivery" element={<Delivery />} />
+                            <Route path="/ChangePassword" element={<ChangePassword />} />
                             <Route path="/Payment" element={<Payment />} />
                             <Route path="/Confirmation" element={<Confirmation />} />
+                            <Route path="/YourProfile" element={<YourProfile />} />
+                            <Route path="/ManageAddress" element={<ManageAddress />} />
+                            <Route path="/OrderHistory" element={<OrderHistory />} />
                             <Route path="/CartPage" element={<CartPage />} />
                             <Route path="/account" element={<Account />} />
                             <Route path="/accountledger" element={<AccountLedger />} />
+                            <Route path="/MobileViewCompo" element={<MobileViewCompo />} />
                             <Route path="/accountledgertable" element={<AccountLedgerTable />} />
                             <Route path="/accountledgerexcel" element={<AccountLedgerExcel />} />
                             <Route path="/accountledgerdebit" element={<DebitVoucher />} />
@@ -149,7 +171,8 @@ export default function SMININGROCKS_App() {
                         <Route path="/CurrentVersion" element={<CurrentVersion />} />
                         <Route path="*" element={<PageNotFound />} />
                     </Routes>
-                    <HomeTab />
+                    {(location.pathname === "/productpage") || (location.pathname === "/Payment") ?
+                        '' : <HomeTab />}
                 </div>
             </div>
         </>

@@ -5,6 +5,7 @@ import { Box, CircularProgress, IconButton, InputAdornment, Tab, Tabs, TextField
 import { useNavigate } from 'react-router-dom';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import './ChangePassword.css'
+import { FiArrowLeft } from 'react-icons/fi';
 
 export default function ChangePassword() {
 
@@ -56,8 +57,8 @@ export default function ChangePassword() {
     const validatePassword = (value) => {
         const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[^\w\d\s]).{8,}$/;
         return passwordRegex.test(value);
-      };
-      
+    };
+
     const handlePasswordChange = (event) => {
         const { value } = event.target;
         setPassword(value);
@@ -132,7 +133,7 @@ export default function ChangePassword() {
                 }
                 const response = await CommonAPI(body);
 
-                console.log('response',response);
+                console.log('response', response);
                 if (response.Data.rd[0].stat === 1) {
                     localStorage.setItem('LoginUser', 'false');
                     naviagation('/')
@@ -157,7 +158,17 @@ export default function ChangePassword() {
                     <CircularProgress className='loadingBarManage' />
                 </div>
             )}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom:'20px' }}>
+
+            <div style={{ display: 'flex', width: '100%', alignItems: 'center', padding: '0px 0px 0px 5px', borderBottom: '1px solid lightgray', backgroundColor: 'white', zIndex: '111111' }}>
+                <FiArrowLeft style={{ height: '25px', color: "#7d7f85", width: '25px' }} onClick={() => naviagation('/account')} />
+
+                <div style={{ width: '85%', display: 'flex', justifyContent: 'center' }}>
+                    {/* <img src={titleImg} className="MainlogogMobileImage" /> */}
+                    <p className='accountPageTitle'>Your Profile</p>
+
+                </div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px' }}>
                 <TextField
                     id="outlined-confirm-password-input"
                     label="Old Password"

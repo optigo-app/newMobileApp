@@ -3,12 +3,15 @@ import './YourProfile.css';
 import { TextField, Modal, Button, CircularProgress } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
+import { FiArrowLeft } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 export default function YourProfile() {
     const [userData, setUserData] = useState(null);
     const [editMode, setEditMode] = useState(false);
     const [editedUserData, setEditedUserData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const naviagation = useNavigate();
 
     useEffect(() => {
         const storedUserData = localStorage.getItem('loginUserDetail');
@@ -84,6 +87,16 @@ export default function YourProfile() {
                     <CircularProgress className='loadingBarManage' />
                 </div>
             )}
+               <div style={{ display: 'flex', width: '100%', alignItems: 'center', padding: '0px 0px 0px 5px', borderBottom: '1px solid lightgray', backgroundColor: 'white', zIndex: '111111' }}>
+                <FiArrowLeft style={{ height: '25px',color: "#7d7f85" , width: '25px' }} onClick={() => naviagation('/account')} />
+
+                <div style={{ width: '85%', display: 'flex', justifyContent: 'center' }}>
+                    {/* <img src={titleImg} className="MainlogogMobileImage" /> */}
+                    <p className='accountPageTitle'>Your Profile</p>
+
+                </div>
+            </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom:'20px' }}>
                 <div className='userProfileMain' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                     {userData && (

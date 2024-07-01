@@ -49,14 +49,14 @@
   
   @media screen and (max-width: 1440px) {
 
-    /* .homeMain {
-        margin-inline: 2%;
+    .homeMain {
 
-    } */
+      padding-bottom: 60px!important;
+    }
 
    
     .paddingTopMobileSet{
-        padding-top: 60px!important;
+        /* padding-top: 60px!important; */
     }
 
 

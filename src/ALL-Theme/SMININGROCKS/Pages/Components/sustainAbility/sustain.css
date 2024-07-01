@@ -20,7 +20,7 @@
 
 @media screen and (max-width: 600px) {
     .sustaionMain {
-        padding: 0px;
+        padding: 20px 0px 0px 0px!important;
     }
     .sustaionMainTitle{
         font-size: 25px!important;
@@ -35,7 +35,7 @@
 
 @media screen and (max-width: 800px) {
     .sustaionMain {
-        padding: 0px;
+        padding: 20px 0px 0px 0px!important;
     }
     .sustaionImage1 {
         height: 130px;
@@ -46,6 +46,6 @@
     .sustaionImage2 {
         height: 130px;
         width: 130px;
-        object-fit: contain;
+        object-fit: cover;
     }
 }

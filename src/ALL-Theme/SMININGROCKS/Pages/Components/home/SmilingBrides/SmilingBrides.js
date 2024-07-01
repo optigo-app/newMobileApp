@@ -7,7 +7,7 @@ import { storImagePath } from '../../../../Utils/globalFunctions/GlobalFunction'
 export default function SmilingBrides() {
     return (
         <div className='paddingTopMobileSet'>
-            <div className='smilingBridesMain'>
+            {/* <div className='smilingBridesMain'>
                 <div className='smilingBrides'>
                     <p style={{
                         color: Colors.fontColor,
@@ -20,7 +20,20 @@ export default function SmilingBrides() {
                 <div className='smlingBridesImages'>
                     <img src={`${storImagePath()}/images/HomePage/Promo/Banner/PromoBanner2.png`} className='smilingMainImages' alt={''}/>
                 </div>
+            </div> */}
+
+            {/* {islogin === 'true' && <div className='smilingBrides'>
+                <p style={{
+                    fontSize: '18px',
+                    margin: '0px',
+                    fontFamily: 'FreightDispProMedium-Regular,Times New Roman,serif'
+                }} className='smilingBridesMainTitle'>SMILING BRIDES</p>
+                <button className='enagementBtn' onClick={() => navigation('/productpage')}>ENGAGEMENT COLLECTION</button>
+            </div>} */}
+            <div className='smlingBridesImages'>
+                <img src={`${storImagePath()}/images/promoMainBanner/PromoBanner2.jpg`} className='smilingMainImages' alt={''} />
             </div>
+
         </div>
     )
 }

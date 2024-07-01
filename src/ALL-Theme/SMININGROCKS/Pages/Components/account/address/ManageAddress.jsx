@@ -5,7 +5,8 @@ import StayPrimaryPortraitIcon from '@mui/icons-material/StayPrimaryPortrait';
 import { Label } from '@mui/icons-material';
 import { ToastContainer, toast } from 'react-toastify';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { FiArrowLeft } from 'react-icons/fi';
 const ManageAddress = () => {
 
     const [defaultAdd, setDefaultAdd] = useState('female');
@@ -18,6 +19,7 @@ const ManageAddress = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [editId, setEditId] = useState('');
     const [editAddressIndex, setEditAddressIndex] = useState(null);
+    const naviagation = useNavigate();
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -438,16 +440,23 @@ const ManageAddress = () => {
 
     return (
         <div>
-         <p style={{
+            <div style={{ display: 'flex', width: '100%', alignItems: 'center', padding: '0px 0px 0px 5px', borderBottom: '1px solid lightgray', backgroundColor: 'white', zIndex: '111111' }}>
+                <FiArrowLeft style={{ height: '25px', color: "#7d7f85", width: '25px' }} onClick={() => naviagation('/account')} />
+                <div style={{ width: '85%', display: 'flex', justifyContent: 'center' }}>
+                    <p className='accountPageTitle'>Order History</p>
+
+                </div>
+            </div>
+            <p style={{
                 textAlign: 'center',
                 padding: "15px 15px",
                 marginTop: '30px',
                 fontSize: '20px',
                 background: '#f6efe6',
                 color: "rgba(31, 25, 25, 0.7)",
-                fontFamily:"PT Sans, sans-serif",
+                fontFamily: "PT Sans, sans-serif",
                 fontWeight: "700",
-                opacity:'.8'
+                opacity: '.8'
             }} className='savedAddress'>Saved Addresses</p>
             <Box sx={{ paddingLeft: "15px" }}>
                 <Button className='muiSmilingRocksBtnManage savedAddressManageBtn' variant="contained" sx={{ background: "#7d7f85", padding: "6px 15px", textAlign: "end", fontSize: "0.9rem", marginBottom: "10px", marginTop: '18px', borderRadius: "0" }} onClick={handleOpen}>ADD NEW ADDRESS</Button></Box>
@@ -489,7 +498,7 @@ const ManageAddress = () => {
                                             />
                                             <Typography>Default</Typography>
                                         </Box>
-                                        
+
                                         <Box className="addresDetailsTg addresDetailsBtn" sx={{ borderTop: "1px solid rgba(0, 0, 0, 0.04) !important", display: "flex", flexWrap: "wrap", paddingTop: "20px", position: 'absolute', bottom: 0, left: "15px", width: "calc( 100% - 30px)", }}>
                                             <Button className='muiSmilingRocksBtnManageEdit' variant="contained"
                                                 sx={{
@@ -517,14 +526,14 @@ const ManageAddress = () => {
             <Dialog
                 open={openDelete}
             >
-              <div className='smilingDeliverDelerePopu'>
-                    <p className='addresDetailsTg'  style={{ fontSize: '20px', fontWeight: 400 }}>ARE YOU SURE TO DELETE ?</p>
+                <div className='smilingDeliverDelerePopu'>
+                    <p className='addresDetailsTg' style={{ fontSize: '20px', fontWeight: 400 }}>ARE YOU SURE TO DELETE ?</p>
                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '40px' }}>
                         <button onClick={handleDeleteAddress} style={{
                             height: '35px',
                             width: '100px',
                             backgroundColor: '#f6efe6',
-                            color:'rgba(31, 25, 25, 0.7)',
+                            color: 'rgba(31, 25, 25, 0.7)',
                             fontWeight: 500,
                             border: 'none',
                             outline: 'none',
@@ -534,7 +543,7 @@ const ManageAddress = () => {
                             height: '35px',
                             width: '100px',
                             backgroundColor: '#f6efe6',
-                            color:'rgba(31, 25, 25, 0.7)',
+                            color: 'rgba(31, 25, 25, 0.7)',
                             fontWeight: 500,
                             border: 'none',
                             outline: 'none',

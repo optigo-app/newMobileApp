@@ -85,10 +85,10 @@ const HomeTab = () => {
               <span style={activeTab === "/" ? styles.activeText : styles.text}>Home</span>
             </Button>
           </NavLink>
-          <NavLink to="/Category" style={styles.tab} activeClassName="active" onClick={() => handleTabChange("/Category")}>
+          <NavLink to="/Menu" style={styles.tab} activeClassName="active" onClick={() => handleTabChange("/Menu")}>
             <Button style={{ display: 'flex', flexDirection: 'column', color: 'rgb(102, 102, 102)' }}>
-              <IoMenuOutline style={activeTab === "/Category" ? styles.activeIcon : styles.icon} />
-              <span style={activeTab === "/Category" ? styles.activeText : styles.text}>Menu</span>
+              <IoMenuOutline style={activeTab === "/Menu" ? styles.activeIcon : styles.icon} />
+              <span style={activeTab === "/Menu" ? styles.activeText : styles.text}>Menu</span>
             </Button>
           </NavLink>
 
@@ -98,7 +98,6 @@ const HomeTab = () => {
                 <FaUser style={activeTab === "/account" ? styles.activeIcon : styles.icon} />
                 <span style={activeTab === "/account" ? styles.activeText : styles.text}>Account</span>
               </Button>
-
             </NavLink>
             : <NavLink to="/AccountWothoutLogin" style={styles.tab} activeClassName="active" onClick={() => handleTabChange("/AccountWothoutLogin")}>
               <Button style={{ display: 'flex', flexDirection: 'column', color: 'rgb(102, 102, 102)' }}>
@@ -137,22 +136,19 @@ const HomeTab = () => {
               }}
             >
               <Button style={{ display: 'flex', flexDirection: 'column', color: 'rgb(102, 102, 102)' }}>
-                <Badge
+                {/* <Badge
                   badgeContent={getCartListCount}
                   overlap={"rectangular"}
                   color="secondary"
                   style={{ marginInline: '10px' }}
-                >
-                  <Tooltip title="Cart">
+                > */}
+                  {/* <Tooltip title="Cart"> */}
                     <FaShoppingCart style={activeTab === "/WithoutLoginCart" ? styles.activeIcon : styles.icon} />
-                  </Tooltip>
-                </Badge>
+                  {/* </Tooltip> */}
+                {/* </Badge> */}
                 <span style={activeTab === "/WithoutLoginCart" ? styles.activeText : styles.text}>Cart</span>
               </Button>
             </NavLink>}
-
-
-
         </div>
       }
     </>
